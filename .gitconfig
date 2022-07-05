@@ -1,0 +1,19 @@
+# 公開したくない情報はincludeで読み込めばよさそう
+# https://coderwall.com/p/z8m3mq/gitconfig-include
+# 今はまだない
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = ike
+	email = 40803799+ikmnjrd@users.noreply.github.com
+[init]
+	defaultBranch = main
+[alias]
+	s = status
+	b = branch
+	cm = commit -m
+	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
