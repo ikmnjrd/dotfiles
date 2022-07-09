@@ -19,3 +19,8 @@ GIT_PS1_SHOWUPSTREAM=auto
 # PROMPT_COMMAND
 setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 export PATH="/usr/local/sbin:$PATH"
+
+## alias
+alias vi="nvim"
+alias vim="nvim"
+alias view="nvim -R"
