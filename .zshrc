@@ -24,3 +24,4 @@ export PATH="/usr/local/sbin:$PATH"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
+alias cat='bat --paging=never'
