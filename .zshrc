@@ -25,3 +25,24 @@ alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
 alias cat='bat --paging=never'
+
+## fzfインストール時に自動追加
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+## fzf設定
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat  --color=always --style=header,grid --line-range :100 {}"'
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+# # fbr - checkout git branch
+# function fzf-checkout-branch() {
+#   local branches branch
+#   branches=$(git branch | sed -e 's/\(^\* \|^  \)//g' | cut -d " " -f 1) &&
+#   branch=$(echo "$branches" | fzf --preview "git show --color=always {}") &&
+#   git checkout $(echo "$branch")
+# }
+# zle     -N   fzf-checkout-branch
+# bindkey "^b" fzf-checkout-branch
