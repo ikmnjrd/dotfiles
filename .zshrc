@@ -25,13 +25,15 @@ alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
 alias cat='bat --paging=never'
+# 遅すぎる
+alias fcode='code $(find $HOME -type d -name ".git"  2> /dev/null |  sed "s/\/\.git$//g" | fzf)'
 
 ## fzfインストール時に自動追加
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## fzf設定
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat  --color=always --style=header,grid --line-range :100 {}"'
 # fbr - checkout git branch
-fbr() {
+function fbr() {
   local branches branch
   branches=$(git branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
