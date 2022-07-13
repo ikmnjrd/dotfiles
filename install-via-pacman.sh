@@ -1,0 +1,1 @@
+pacman -Syu neovim bat fzf zsh ripgrep
