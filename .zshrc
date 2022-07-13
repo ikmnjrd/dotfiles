@@ -21,6 +21,7 @@ setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 export PATH="/usr/local/sbin:$PATH"
 
 ## alias
+alias ll="ls -al"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
