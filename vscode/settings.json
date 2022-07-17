@@ -1,0 +1,20 @@
+{
+  "workbench.startupEditor": "newUntitledFile",
+  "git.autofetch": true,
+  "remote.onstartup": true,
+  "workbench.editor.untitled.hint": "hidden",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "/bin/bash (migrated)": {
+      "path": "/bin/bash",
+      "args": ["-l"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "",
+  "editor.tabSize": 2,
+  "editor.bracketPairColorization.enabled": true,
+  "workbench.editor.splitInGroupLayout": "vertical",
+  "redhat.telemetry.enabled": false,
+  "window.zoomLevel": 1,
+  "workbench.editor.wrapTabs": true
+}
