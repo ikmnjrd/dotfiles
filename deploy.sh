@@ -14,6 +14,7 @@
 #     -not -path "*/org/*"))
 dotfiles+=("$(pwd)/.zshrc")
 dotfiles+=("$(pwd)/.tmux.conf")
+dotfiles+=("$(pwd)/.alacritty.yml")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
 
@@ -25,6 +26,7 @@ dotfiles+=("$(pwd)/vscode/settings.json")
 #     -not -name "*.swo"))
 home_dotsfile+=("$HOME/.zshrc")
 home_dotsfile+=("$HOME/.tmux.conf")
+home_dotsfile+=("$HOME/.alacritty.yml")
 ## vscode
 if [ "$(uname)" == 'Darwin' ]; then
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/keybindings.json")
