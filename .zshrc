@@ -25,18 +25,18 @@ alias ll="ls -al"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
-alias cat='bat --theme=Nord --paging=never'
+alias cat='bat --paging=never'
 alias fcode='code $( locate .git | grep "\.git$" | sed "s/\/\.git$//g" | fzf)'
 alias updatedb='sudo /usr/libexec/locate.updatedb' # locateコマンドの辞書作成
 alias fcd='cd $(fd --type directory | fzf)'
 
 ## bat設定
-BAT_THEME="Nord" # Not working
+export BAT_THEME="Nord"
 
 ## fzfインストール時に自動追加
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## fzf設定
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --theme=Nord --color=always --style=header,grid --line-range :100 {}"'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --color=always --style=header,grid --line-range :100 {}"'
 # fbr - checkout git branch
 function fbr() {
   local branches branch
