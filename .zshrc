@@ -28,6 +28,7 @@ alias view="nvim -R"
 alias cat='bat --paging=never'
 alias fcode='code $( locate .git | grep "\.git$" | sed "s/\/\.git$//g" | fzf)'
 alias updatedb='sudo /usr/libexec/locate.updatedb' # locateコマンドの辞書作成
+alias fcd='cd $(fd --type directory | fzf)'
 
 ## fzfインストール時に自動追加
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
