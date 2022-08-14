@@ -28,7 +28,6 @@ alias view="nvim -R"
 alias cat='bat --paging=never'
 alias fcode='code $( locate .git | grep "\.git$" | sed "s/\/\.git$//g" | fzf)'
 alias updatedb='sudo /usr/libexec/locate.updatedb' # locateコマンドの辞書作成
-alias fcd='cd $(fd --type directory | fzf)'
 
 ## bat設定
 export BAT_THEME="Nord"
@@ -37,6 +36,9 @@ export BAT_THEME="Nord"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## fzf設定
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --color=always --style=header,grid --line-range :100 {}"'
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+bindkey "ç" fzf-cd-widget # for Mac, keybinding option+c sends ç
+
 # fbr - checkout git branch
 function fbr() {
   local branches branch
