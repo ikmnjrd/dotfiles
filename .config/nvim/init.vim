@@ -9,6 +9,7 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'junegunn/fzf', {'dir': '~/.fzf_bin', 'do': './install --all'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/gina.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
 
@@ -71,9 +72,6 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "" fzf-preview
-let $BAT_THEME                     = 'nord'
-let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'nord'
-
 nnoremap <silent> <C-p>  :<C-u>CocCommand fzf-preview.FromResources buffer project_mru project<CR>
 nnoremap <silent> [ff]s  :<C-u>CocCommand fzf-preview.GitStatus<CR>
 nnoremap <silent> [ff]gg :<C-u>CocCommand fzf-preview.GitActions<CR>
