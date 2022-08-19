@@ -13,6 +13,7 @@
 #     -not -path "*/.git/*" \
 #     -not -path "*/org/*"))
 dotfiles+=("$(pwd)/.zshrc")
+dotfiles+=("$(pwd)/.zshenv")
 dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
 dotfiles+=("$(pwd)/.alacritty.yml")
@@ -26,6 +27,7 @@ dotfiles+=("$(pwd)/vscode/settings.json")
 #     -not -name "*.swp" \
 #     -not -name "*.swo"))
 home_dotsfile+=("$HOME/.zshrc")
+home_dotfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.alacritty.yml")
