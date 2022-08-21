@@ -25,6 +25,7 @@ set expandtab "タブの入力にスペース
 set clipboard=unnamed "クリップボードへの登録
 set tabstop=2 "タブに変換されるサイズ
 set shell=/bin/zsh "コマンド実行にzshを使う
+set history=200 "Exコマンド履歴保持数
 
 " vim-im-select
 let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
