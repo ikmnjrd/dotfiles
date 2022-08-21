@@ -19,10 +19,12 @@ call plug#end()
 " set options
 set termguicolors
 set number
-set shell=zsh
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set list
 set expandtab "タブの入力にスペース
+set clipboard=unnamed "クリップボードへの登録
+set tabstop=2 "タブに変換されるサイズ
+set shell=/bin/zsh "コマンド実行にzshを使う
 
 " vim-im-select
 let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
@@ -109,11 +111,8 @@ colorscheme nord
 
 """ コピペ終わり
 
-"set shell=/bin/zsh "コマンド実行にzshを使う
 "set shiftwidth=2 "インデントの幅
-"set tabstop=2 "タブに変換されるサイズ
 "set textwidth=0 "ワードラップを無効
 "set autoindent "自動インデント :set paste で解除可能
 "set hlsearch "検索のハイライト
-"set clipboard=unnamed "クリップボードへの登録
 "syntax on
