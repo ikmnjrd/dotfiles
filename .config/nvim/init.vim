@@ -12,6 +12,7 @@ Plug 'lambdalisue/gina.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
+Plug 'ikmnjrd/vim-im-select'
 
 call plug#end()
 
@@ -21,6 +22,9 @@ set number
 set shell=zsh
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set list
+
+" vim-im-select
+let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
 
 " map prefix
 let g:mapleader = "\<Space>"
