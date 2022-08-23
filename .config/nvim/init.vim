@@ -43,6 +43,15 @@ xnoremap [ff]     <Nop>
 nmap     z        [ff]
 xmap     z        [ff]
 
+"" カーソル位置による表示の調整
+""" https://dackdive.hateblo.jp/entry/2014/05/20/183756
+nnoremap <silent> [ff]. z.
+nnoremap <silent> [ff]z zz
+nnoremap <silent> [ff]t zt
+nnoremap <silent> [ff]<CR> z<CR>
+nnoremap <silent> [ff]b zb
+nnoremap <silent> [ff]- z-
+
 "" coc.nvim
 let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint8', 'coc-prettier', 'coc-git', 'coc-fzf-preview', 'coc-lists']
 
@@ -79,7 +88,7 @@ xnoremap          [ff]f  "sy:CocCommand fzf-preview.ProjectGrep --add-fzf-arg=--
 nnoremap <silent> [ff]q  :<C-u>CocCommand fzf-preview.CocCurrentDiagnostics<CR>
 nnoremap <silent> [ff]rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> [ff]d  :<C-u>CocCommand fzf-preview.CocDefinition<CR>
-nnoremap <silent> [ff]t  :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
+nnoremap <silent> [ff]i  :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
 nnoremap <silent> [ff]o  :<C-u>CocCommand fzf-preview.CocOutline --add-fzf-arg=--exact --add-fzf-arg=--no-sort<CR>
 
 "" fern
