@@ -119,7 +119,10 @@ let g:nord_uniform_diff_background = v:true
 " Load the colorscheme
 colorscheme nord
 
-""" コピペ終わり
+"" ビルトインプラグイン
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
 
 "set shiftwidth=2 "インデントの幅
 "set textwidth=0 "ワードラップを無効
