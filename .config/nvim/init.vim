@@ -21,12 +21,20 @@ set termguicolors
 set number
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set list
-set expandtab "タブの入力にスペース
 set clipboard=unnamed "クリップボードへの登録
 set tabstop=2 "タブに変換されるサイズ
 set shell=/bin/zsh "コマンド実行にzshを使う
 set history=200 "Exコマンド履歴保持数
 set incsearch "検索入力時からマッチ
+"" Indent
+set autoindent
+set backspace=indent,eol,start
+set breakindent
+set expandtab "タブの入力にスペース
+set nostartofline
+set shiftwidth=2
+set smartindent
+set tabstop=2
 
 " vim-im-select
 let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
