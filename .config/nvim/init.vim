@@ -13,28 +13,38 @@ Plug 'lambdalisue/fern.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
 Plug 'ikmnjrd/vim-im-select'
+Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
 
 call plug#end()
 
 " set options
 set termguicolors
 set number
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-set list
 set clipboard=unnamed "クリップボードへの登録
-set tabstop=2 "タブに変換されるサイズ
 set shell=/bin/zsh "コマンド実行にzshを使う
 set history=200 "Exコマンド履歴保持数
 set incsearch "検索入力時からマッチ
 "" Indent
 set autoindent
-set backspace=indent,eol,start
-set breakindent
+set breakindent " 行を折り返すときにインデントを考慮
 set expandtab "タブの入力にスペース
 set nostartofline
+set tabstop=2 "タブに変換されるサイズ
 set shiftwidth=2
 set smartindent
-set tabstop=2
+
+"" indent_blankline
+lua << EOF
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append "eol:↴"
+
+require("indent_blankline").setup {
+  show_end_of_line = true,
+  space_char_blankline = " ",
+}
+
+EOF
 
 " vim-im-select
 let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
@@ -62,7 +72,16 @@ nnoremap <silent> [ff]b zb
 nnoremap <silent> [ff]- z-
 
 "" coc.nvim
-let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint8', 'coc-prettier', 'coc-git', 'coc-fzf-preview', 'coc-lists']
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-eslint8',
+  \ 'coc-prettier',
+  \ 'coc-git',
+  \ 'coc-fzf-preview',
+  \ 'coc-lists',
+  \ 'coc-snippets',
+  \ 'coc-prisma',
+  \ ]
 
 inoremap <silent> <expr> <C-Space> coc#refresh()
 nnoremap <silent> K       :<C-u>call <SID>show_documentation()<CR>
@@ -111,6 +130,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "typescript",
     "tsx",
+    "prisma"
   },
   highlight = {
     enable = true,
@@ -133,8 +153,3 @@ set nocompatible
 filetype plugin on
 runtime macros/matchit.vim
 
-"set shiftwidth=2 "インデントの幅
-"set textwidth=0 "ワードラップを無効
-"set autoindent "自動インデント :set paste で解除可能
-"set hlsearch "検索のハイライト
-"syntax on
