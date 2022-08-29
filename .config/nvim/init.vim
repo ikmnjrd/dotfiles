@@ -83,10 +83,11 @@ let g:coc_global_extensions = [
   \ 'coc-prisma',
   \ ]
 
-inoremap <silent> <expr> <C-Space> coc#refresh()
+inoremap <silent> <expr>  <C-Space> coc#refresh()
 nnoremap <silent> K       :<C-u>call <SID>show_documentation()<CR>
 nmap     <silent> [dev]rn <Plug>(coc-rename)
 nmap     <silent> [dev]a  <Plug>(coc-codeaction-selected)iw
+nmap     <silent> gd      <Plug>(coc-definition)
 
 function! s:coc_typescript_settings() abort
   nnoremap <silent> <buffer> [dev]f :<C-u>CocCommand eslint.executeAutofix<CR>:CocCommand prettier.formatFile<CR>
