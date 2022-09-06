@@ -19,6 +19,7 @@ dotfiles+=("$(pwd)/.gitconfig")
 dotfiles+=("$(pwd)/.alacritty.yml")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
+#dotfiles+=("$(pwd)/.config/nvim/init.vim")
 
 ## 展開用
 # home_dotsfile=($(find $HOME -maxdepth 1 -regex ".*\/\..*" \
@@ -31,6 +32,7 @@ home_dotfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.alacritty.yml")
+#home_dotsfile+=("$HOME/.config/nvim/init.vim")
 ## vscode
 if [ "$(uname)" == 'Darwin' ]; then
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/keybindings.json")
@@ -58,6 +60,8 @@ set() {
       elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux']; then
         ln -svf $file_name "$HOME/.config/Code/User"
       fi
+    #nvim
+    #elif [$file_name == ]
     ### ./ ###
     else
       ln -svf $file_name $HOME
