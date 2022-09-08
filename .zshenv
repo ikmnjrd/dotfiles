@@ -1,7 +1,14 @@
 . "$HOME/.cargo/env" # 「.」はsourceと同義
 
 ## aliases
-alias ll="ls -al"
+#For mac
+alias ls="ls -G"
+alias ll="ls -lG"
+alias l="ls -alG"
+#for linux
+# alias ls="ls --color=auto"
+# alias ll="ls -l --color=auto"
+# alias l="ls -al --color=auto"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
