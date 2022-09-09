@@ -14,6 +14,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
 Plug 'ikmnjrd/vim-im-select'
 Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
+Plug 'ellisonleao/glow.nvim'
 
 call plug#end()
 
