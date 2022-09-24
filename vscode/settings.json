@@ -16,6 +16,9 @@
   "workbench.editor.splitInGroupLayout": "vertical",
   "redhat.telemetry.enabled": false,
   "workbench.editor.wrapTabs": true,
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
   "terminal.external.osxExec": "alacritty.app",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
