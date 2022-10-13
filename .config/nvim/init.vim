@@ -72,6 +72,16 @@ nnoremap <silent> [ff]<CR> z<CR>
 nnoremap <silent> [ff]b zb
 nnoremap <silent> [ff]- z-
 
+"" disable languages surpport
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
+"" if you use volta(node version manager)
+"" https://github.com/volta-cli/volta/issues/866
+if executable('volta')
+  let g:node_host_prog = trim(system("volta which neovim-node-host"))
+endif
+
 "" coc.nvim
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
