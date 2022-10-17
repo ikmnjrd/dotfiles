@@ -7,9 +7,32 @@ window:
     y: 0
   opacity: 0.9
   dynamic_padding: true
-  decorations: full
+
+  # Window decorations
+  #
+  # Values for `decorations`:
+  #     - full: Borders and title bar
+  #     - none: Neither borders nor title bar
+  #
+  # Values for `decorations` (macOS only):
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background, but no title bar buttons
+  decorations: buttonless
+
+  # Startup Mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
   startup_mode: Windowed
-  dynamic_title: true
+
+  #dynamic_title: true
+
+
 font:
   size: 12.6
   normal:
@@ -74,3 +97,24 @@ colors:
     magenta: '#8c738c'
     cyan: '#6d96a5'
     white: '#aeb3bb'
+
+# Shell
+#
+# You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
+# Entries in `shell.args` are passed unmodified as arguments to the shell.
+#
+# Default:
+#   - (macOS) /bin/bash --login
+#   - (Linux/BSD) user login shell
+#   - (Windows) powershell
+#shell:
+#  program: /bin/bash
+#  args:
+#    - --login
+
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux new -s default"
