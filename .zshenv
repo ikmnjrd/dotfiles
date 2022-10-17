@@ -1,4 +1,8 @@
+## Rust
 . "$HOME/.cargo/env" # 「.」はsourceと同義
+
+## Python
+#alias python='/usr/bin/python3'
 
 ## aliases
 #For mac
