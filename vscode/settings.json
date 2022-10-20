@@ -17,11 +17,11 @@
   "redhat.telemetry.enabled": false,
   "workbench.editor.wrapTabs": true,
   "window.zoomLevel": 1,
-  "terminal.external.osxExec": "alacritty.app",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
-  },
+  "terminal.external.osxExec": "alacritty.app"
+  // "[typescript]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  // "[vue]": {
+  //   "editor.defaultFormatter": "Vue.volar"
+  // }
 }
