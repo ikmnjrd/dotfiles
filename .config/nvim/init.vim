@@ -92,6 +92,7 @@ let g:coc_global_extensions = [
   \ 'coc-lists',
   \ 'coc-snippets',
   \ 'coc-prisma',
+  \ 'coc-rust-analyzer',
   \ ]
 
 inoremap <silent> <expr>  <C-Space> coc#refresh()
@@ -144,7 +145,8 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "typescript",
     "tsx",
-    "prisma"
+    "prisma",
+    "rust"
   },
   highlight = {
     enable = true,
