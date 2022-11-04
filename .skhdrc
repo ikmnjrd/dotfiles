@@ -46,5 +46,5 @@ shift + alt - f : yabai -m window --toggle native-fullscreen
 alt - e : yabai -m window --toggle split
 # float / unfloat window and restore position
 # alt - t : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-alt - t : yabai -m window --toggle float && yabai -m window --grid 0:9:0:4:6:0
+alt - t : yabai -m window --toggle float && yabai -m window --grid 1:9:3:0:5:1
 
