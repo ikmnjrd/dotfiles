@@ -46,5 +46,8 @@ shift + alt - f : yabai -m window --toggle native-fullscreen
 alt - e : yabai -m window --toggle split
 # float / unfloat window and restore position
 # alt - t : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-alt - t : yabai -m window --toggle float && yabai -m window --grid 1:9:3:0:5:1
+
+# フロート時に右端で占有したいがフロート解除時に左下にやられるため、現在は左側にフロートするよう設定
+# https://github.com/koekeishiya/yabai/wiki/Commands
+alt - t : yabai -m window --toggle float && yabai -m window --grid 1:9:1:0:4:1
 
