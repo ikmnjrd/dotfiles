@@ -16,12 +16,24 @@
   "workbench.editor.splitInGroupLayout": "vertical",
   "redhat.telemetry.enabled": false,
   "workbench.editor.wrapTabs": true,
+  "terminal.external.osxExec": "alacritty.app",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "window.zoomLevel": 1,
-  "terminal.external.osxExec": "alacritty.app"
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   // "[typescript]": {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode"
   // },
   // "[vue]": {
   //   "editor.defaultFormatter": "Vue.volar"
   // }
+  // Neovim拡張
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "editor.inlineSuggest.enabled": true
 }
