@@ -1,1 +1,8 @@
-pacman -Syu neovim bat fzf zsh ripgrep
+pacman -S \
+  neovim \
+  bat \
+  fzf \
+  zsh \
+  ripgrep \
+  alacritty \
+  tmux

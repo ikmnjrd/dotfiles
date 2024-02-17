@@ -16,7 +16,7 @@ dotfiles+=("$(pwd)/.zshrc")
 dotfiles+=("$(pwd)/.zshenv")
 dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
-dotfiles+=("$(pwd)/.alacritty.yml")
+dotfiles+=("$(pwd)/.alacritty.toml")
 dotfiles+=("$(pwd)/.yabairc")
 dotfiles+=("$(pwd)/.skhdrc")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
@@ -33,15 +33,19 @@ home_dotsfile+=("$HOME/.zshrc")
 home_dotfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
-home_dotsfile+=("$HOME/.alacritty.yml")
-home_dotsfile+=("$HOME/.yabairc")
-home_dotsfile+=("$HOME/.skhdrc")
+home_dotsfile+=("$HOME/.alacritty.toml")
 #home_dotsfile+=("$HOME/.config/nvim/init.vim")
-## vscode
+## OS X
 if [ "$(uname)" == 'Darwin' ]; then
+    ## yabai
+    home_dotsfile+=("$HOME/.yabairc")
+    home_dotsfile+=("$HOME/.skhdrc")
+    ## vscode
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/settings.json")
+## Linux
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux']; then
+    ## vscode
     home_dotsfile+=("$HOME/.config/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/.config/Code/User/settings.json")
 fi
