@@ -57,22 +57,43 @@ cursor = "#d8dee9"
 text = "#2e3440"
 
 [font]
-size = 12.6
+## for OS X
+#size = 12.6
+## for Linux
+size = 10
+
+[font.normal]
+## for Linux
+family = "Source Code Pro"
+## for OX X
+#family = "Monaco"
+style = "Regular"
 
 [font.bold]
-family = "Monaco"
+## for Linux
+family = "Source Code Pro"
+## for OX X
+#family = "Monaco"
 style = "Bold"
 
 [font.italic]
-family = "Monaco"
+## for Linux
+family = "Source Code Pro"
+## for OX X
+#family = "Monaco"
 style = "Italic"
 
-[font.normal]
-family = "Monaco"
-style = "Regular"
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
 
 [shell]
-args = ["-l", "-c", "tmux attach || tmux new -s default"]
+## for OS X
+#args = ["-l", "-c", "tmux attach || tmux new -s default"]
 program = "/bin/zsh"
 
 [window]
