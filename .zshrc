@@ -27,8 +27,18 @@ export BAT_THEME="Nord"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ## fzf設定
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --preview "bat --color=always --style=header,grid --line-range :100 {}"'
+# CTRL-/ to toggle small preview window to see the full command
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}' --preview-window up:3:hidden:wrap
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 bindkey "ç" fzf-cd-widget # for Mac, keybinding option+c sends ç
+# for My EndavourOS https://github.com/junegunn/fzf/issues/1190
+source /usr/share/fzf/key-bindings.zsh
 
 # fbr - checkout git branch
 function fbr() {

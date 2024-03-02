@@ -60,7 +60,7 @@ text = "#2e3440"
 ## for OS X
 #size = 12.6
 ## for Linux
-size = 10
+size = 8.5
 
 [font.normal]
 ## for Linux
