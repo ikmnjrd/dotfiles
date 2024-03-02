@@ -6,6 +6,6 @@ pacman -S \
   ripgrep \
   alacritty \
   tmux \
-  ttf-sourcecode-pro-nerd \ #terminal用等幅フォント
+  ttf-sourcecodepro-nerd \ #terminal用等幅フォント
   noto-font \
   noto-fonts-cjk
