@@ -2,7 +2,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "git.autofetch": true,
   "remote.onstartup": true,
-  "workbench.editor.untitled.hint": "hidden",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.profiles.osx": {
     "/bin/bash (migrated)": {
@@ -35,5 +34,6 @@
     "asvetliakov.vscode-neovim": 1
   },
   "javascript.updateImportsOnFileMove.enabled": "never",
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "workbench.editor.empty.hint": "hidden"
 }

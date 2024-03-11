@@ -59,20 +59,20 @@ fi
 #   set
 # }
 
-set() {
+set_links() {
   for file_name in "${dotfiles[@]}"; do
     ### ./vscode ###
-    if [[ $file_name =~ \/vscode\/.+\.json$ ]]; then
+    if [[ "$file_name" =~ \/vscode\/.+\.json$ ]]; then
       if [ "$(uname)" == 'Darwin' ]; then
-        ln -svf $file_name "$HOME/Library/Application Support/Code/User"
-      elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux']; then
-        ln -svf $file_name "$HOME/.config/Code/User"
+        ln -svf "$file_name" "$HOME/Library/Application Support/Code/User"
+      elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+        ln -svf "$file_name" "$HOME/.config/Code/User"
       fi
     #nvim
     #elif [$file_name == ]
     ### ./ ###
     else
-      ln -svf $file_name $HOME
+      ln -svf "$file_name" "$HOME"
     fi
     echo "Set link to ${file_name}."
   done
@@ -80,7 +80,7 @@ set() {
 
 unset() {
   for file_name in $(list); do
-    unlink $file_name
+    unlink "$file_name"
     echo "Unlink to ${file_name}."
   done
 }
@@ -147,7 +147,7 @@ case $1 in
     exit 0
     ;;
   set|-s)
-    set
+    set_links
     exit 0
     ;;
   unset|-u)
