@@ -100,7 +100,9 @@ program = "/bin/zsh"
 ## for OS X
 #decorations = "buttonless"
 ## for Linux
-decorations = "None"
+#decorations = "None"
+## for i3wm
+decorations = "full"
 dynamic_padding = true
 opacity = 0.9
 startup_mode = "Windowed"
