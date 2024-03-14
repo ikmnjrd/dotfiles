@@ -13,9 +13,17 @@
 [init]
 	defaultBranch = main
 [alias]
-	s = status
-	b = branch
-	cm = commit -m
+	s    = status
+	b    = branch
+	sp   = switch -
+	cm   = commit -m
+	ca   = commit --amend
+	can  = commit --amend --no-edit
+	cf   = commit --fixup
+	r    = rebase
+	ra   = rebase --autosqush
+	pr   = pull --rebase
+	lo   = log --oneline
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [rebase]
 	autoStash = true
