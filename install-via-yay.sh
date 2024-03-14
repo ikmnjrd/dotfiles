@@ -6,4 +6,6 @@ yay -S \
   1password \
   slack-desktop \
   notion-app \
-  cursor-appimage
+  auto-commit
+  # for auto-commit [ export OPENAI_API_KEY='sk-XXXXXXXX' ] https://github.com/m1guelpf/auto-commit/
+  # cursor-appimage
