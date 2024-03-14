@@ -130,3 +130,6 @@ fi
 ### volta(node package manager)
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+### for auto-commit
+export PATH="$PATH:$HOME/.bin"
