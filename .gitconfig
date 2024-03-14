@@ -22,7 +22,10 @@
 	cf   = commit --fixup
 	r    = rebase
 	ra   = rebase --autosqush
-	pr   = pull --rebase
+	pl   = pull
+	plr  = pull --rebase
+	ps   = push
+	pso  = push origin
 	lo   = log --oneline
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [rebase]
