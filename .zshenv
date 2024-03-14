@@ -4,6 +4,11 @@
 ## Python
 #alias python='/usr/bin/python3'
 
+## 秘密鍵
+if [ -f ~/.secrets ]; then
+    source ~/.secrets
+fi
+
 ## aliases
 #For mac
 alias ls="ls -G"
