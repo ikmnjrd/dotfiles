@@ -15,7 +15,9 @@
 [alias]
 	s    = status
 	b    = branch
-	sp   = switch -
+  sw   = switch
+  swc  = switch -c
+	swp   = switch -
 	cm   = commit -m
 	ca   = commit --amend
 	can  = commit --amend --no-edit
@@ -24,8 +26,9 @@
 	ra   = rebase --autosqush
 	pl   = pull
 	plr  = pull --rebase
+  plo = "!f() { git pull origin $(git symbolic-ref --short HEAD); }; f"
 	ps   = push
-	pso  = push origin
+  pso = "!f() { git push origin $(git symbolic-ref --short HEAD); }; f"
 	lo   = log --oneline
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [rebase]
