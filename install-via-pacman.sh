@@ -8,4 +8,5 @@ pacman -S \
   tmux \
   ttf-sourcecodepro-nerd \ #terminal用等幅フォント
   noto-fonts-cjk \
-  flatpak
+  flatpak \
+  maim # 短径選択のスクリーンショット
