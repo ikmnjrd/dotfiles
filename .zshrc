@@ -8,6 +8,8 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 # zshの補完機能を有効にする
 autoload -Uz compinit && compinit
 
+# キーリピートの速度変更
+xset r rate 300 50
 
 # プロンプトのオプション表示設定
 GIT_PS1_SHOWDIRTYSTATE=true
