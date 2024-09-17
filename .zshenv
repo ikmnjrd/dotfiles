@@ -28,4 +28,5 @@ alias updatedb='sudo /usr/libexec/locate.updatedb' # locateコマンドの辞書
 # tree参考:https://gist.github.com/jpwilliams/dabff82b0ceb95dd57a7552ea7f2d675
 alias tree='tree -C -I $((cat .gitignore 2> /dev/null || cat $(git rev-parse --show-toplevel 2> /dev/null)/.gitignore 2> /dev/null || echo "node_modules") | egrep -v "^#.*$|^[[:space:]]*$" | tr "\\n" "|" | rev | cut -c 2- | rev)'
 
-
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -o -selection clipboard"
