@@ -17,11 +17,19 @@ dotfiles+=("$(pwd)/.zshenv")
 dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
 dotfiles+=("$(pwd)/.alacritty.toml")
-dotfiles+=("$(pwd)/.yabairc")
-dotfiles+=("$(pwd)/.skhdrc")
-dotfiles+=("$(pwd)/vscode/keybindings.json")
+dotfiles+=("$(pwd)/.config/nvim/init.vim")
+dotfiles+=("$(pwd)/vscode/kebindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
-#dotfiles+=("$(pwd)/.config/nvim/init.vim")
+## OS X
+if [ "$(uname)" == 'Darwin' ]; then
+    ## yabai
+    dotfiles+=("$(pwd)/.yabairc")
+    dotfiles+=("$(pwd)/.skhdrc")
+## Linux
+elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+    ## Linux用の処理
+    echo "空の対策"
+fi
 
 ## 展開用
 # home_dotsfile=($(find $HOME -maxdepth 1 -regex ".*\/\..*" \
@@ -34,7 +42,7 @@ home_dotfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.alacritty.toml")
-#home_dotsfile+=("$HOME/.config/nvim/init.vim")
+home_dotsfile+=("$HOME/.config/nvim/init.vim")
 ## OS X
 if [ "$(uname)" == 'Darwin' ]; then
     ## yabai
@@ -44,7 +52,7 @@ if [ "$(uname)" == 'Darwin' ]; then
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/settings.json")
 ## Linux
-elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux']; then
+elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     ## vscode
     home_dotsfile+=("$HOME/.config/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/.config/Code/User/settings.json")
@@ -68,8 +76,9 @@ set_links() {
       elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
         ln -svf "$file_name" "$HOME/.config/Code/User"
       fi
-    #nvim
-    #elif [$file_name == ]
+    ### nvim ###
+    elif [[ "$file_name" =~ \/\.config\/nvim.+$ ]]; then
+        ln -svf "$file_name" "$HOME/.config/nvim/"
     ### ./ ###
     else
       ln -svf "$file_name" "$HOME"

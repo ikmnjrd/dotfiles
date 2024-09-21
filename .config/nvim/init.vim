@@ -12,8 +12,8 @@ Plug 'lambdalisue/gina.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
-Plug 'ikmnjrd/vim-im-select'
-Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
+"Plug 'ikmnjrd/vim-im-select'
+"Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
 Plug 'ellisonleao/glow.nvim'
 
 call plug#end()
@@ -35,17 +35,17 @@ set shiftwidth=2
 set smartindent
 
 "" indent_blankline
-lua << EOF
-vim.opt.list = true
-vim.opt.listchars:append "space:⋅"
-vim.opt.listchars:append "eol:↴"
-
-require("indent_blankline").setup {
-  show_end_of_line = true,
-  space_char_blankline = " ",
-}
-
-EOF
+"lua << EOF
+"vim.opt.list = true
+"vim.opt.listchars:append "space:⋅"
+"vim.opt.listchars:append "eol:↴"
+"
+"require("ibl").setup {
+"  show_end_of_line = true,
+"  space_char_blankline = " ",
+"}
+"
+"EOF
 
 " vim-im-select
 let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'

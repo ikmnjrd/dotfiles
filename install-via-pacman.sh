@@ -6,7 +6,11 @@ pacman -S \
   ripgrep \
   alacritty \
   tmux \
-  ttf-sourcecodepro-nerd \ #terminal用等幅フォント
+  ttf-sourcecodepro-nerd \
   noto-fonts-cjk \
   flatpak \
-  maim # 短径選択のスクリーンショット
+  maim \
+  fcitx5-im \
+  fcitx5-mozc \
+  neofetch \
+  xclip
