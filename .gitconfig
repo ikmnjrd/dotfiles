@@ -10,6 +10,8 @@
 [user]
 	name = ike
 	email = 40803799+ikmnjrd@users.noreply.github.com
+[core]
+  editor = nvim
 [init]
 	defaultBranch = main
 [alias]
