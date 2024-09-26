@@ -13,4 +13,5 @@ pacman -S \
   fcitx5-im \
   fcitx5-mozc \
   neofetch \
-  xclip
+  xclip \
+  tig
