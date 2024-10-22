@@ -17,20 +17,29 @@
 [alias]
 	s    = status
 	b    = branch
+  bd   = branch --delete
+
   sw   = switch
   swc  = switch -c
-	swp   = switch -
+  swp  = switch -
+
 	cm   = commit -m
 	ca   = commit --amend
 	can  = commit --amend --no-edit
-	cf   = commit --fixup
+  cf   = commit --fixup
+
+  d    = diff --cached --name-only
+
 	r    = rebase
-	ra   = rebase --autosqush
+  ra   = rebase --autosqush
+
 	pl   = pull
-	plr  = pull --rebase
-  plo = "!f() { git pull origin $(git symbolic-ref --short HEAD); }; f"
+  plr  = pull --rebase
+  plo = "!f() { git pull origin $(git symbolic-ref --short HEAD); git fetch -p; }; f"
+
 	ps   = push
   pso = "!f() { git push origin $(git symbolic-ref --short HEAD); }; f"
+
 	lo   = log --oneline
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [rebase]
