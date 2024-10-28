@@ -9,5 +9,15 @@
     "key": "ctrl+'",
     "command": "workbench.action.focusFirstEditorGroup",
     "when": "terminalFocus"
+  },
+  // vscodevim を利用している場合には不要
+  {
+    "key": "ctrl+e",
+    "command": "workbench.action.quickOpen",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
   }
 ]

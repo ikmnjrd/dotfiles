@@ -18,7 +18,7 @@ dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
 dotfiles+=("$(pwd)/.alacritty.toml")
 dotfiles+=("$(pwd)/.config/nvim/init.vim")
-dotfiles+=("$(pwd)/vscode/kebindings.json")
+dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
 ## OS X
 if [ "$(uname)" == 'Darwin' ]; then
