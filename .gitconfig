@@ -42,5 +42,7 @@
 
 	lo   = log --oneline
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+  rename-js-to-ts = "!f() { git ls-files \"$1\"*.js | while read file; do git mv \"$file\" \"${file%.js}.ts\"; done; }; f"
 [rebase]
 	autoStash = true
