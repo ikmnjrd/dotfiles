@@ -18,6 +18,10 @@ dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
 dotfiles+=("$(pwd)/.alacritty.toml")
 dotfiles+=("$(pwd)/.config/nvim/init.vim")
+dotfiles+=("$(pwd)/.config/espanso/config/default.yml")
+dotfiles+=("$(pwd)/.config/espanso/match/base.yml")
+dotfiles+=("$(pwd)/.config/espanso/match/coding.yml")
+dotfiles+=("$(pwd)/.config/espanso/match/markdown.yml")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
 ## OS X
@@ -28,7 +32,7 @@ if [ "$(uname)" == 'Darwin' ]; then
 ## Linux
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     ## Linux用の処理
-    echo "空の対策"
+    echo "this is linux"
 fi
 
 ## 展開用
@@ -38,7 +42,7 @@ fi
 #     -not -name "*.swp" \
 #     -not -name "*.swo"))
 home_dotsfile+=("$HOME/.zshrc")
-home_dotfile+=("$HOME/.zshenv")
+home_dotsfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.alacritty.toml")
@@ -53,9 +57,14 @@ if [ "$(uname)" == 'Darwin' ]; then
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/settings.json")
 ## Linux
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+    echo "hoge"
     ## vscode
     home_dotsfile+=("$HOME/.config/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/.config/Code/User/settings.json")
+    home_dotsfile+=("$HOME/.config/espanso/config/default.yml")
+    home_dotsfile+=("$HOME/.config/espanso/match/base.yml")
+    home_dotsfile+=("$HOME/.config/espanso/match/coding.yml")
+    home_dotsfile+=("$HOME/.config/espanso/match/markdown.yml")
 fi
 
 
@@ -79,6 +88,11 @@ set_links() {
     ### nvim ###
     elif [[ "$file_name" =~ \/\.config\/nvim.+$ ]]; then
         ln -svf "$file_name" "$HOME/.config/nvim/"
+    ### espanso ###
+    elif [[ "$file_name" =~ \/\.config\/espanso/config.+$ ]]; then
+        ln -svf "$file_name" "$HOME/.config/espanso/config/"
+    elif [[ "$file_name" =~ \/\.config\/espanso/match.+$ ]]; then
+        ln -svf "$file_name" "$HOME/.config/espanso/match/"
     ### ./ ###
     else
       ln -svf "$file_name" "$HOME"
