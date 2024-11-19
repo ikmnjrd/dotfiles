@@ -1,0 +1,36 @@
+# Markdown snippets
+matches:
+  # code block
+  - trigger:  ";mdcode"
+    replace: "```$|$\n```"
+
+  - trigger: ";mddetail"
+    replace: "<details>\n  <summary>$|$</summary>\n  <p></p>\n</details>"
+
+  # image with clipboard
+  - trigger: ";mdimg"
+    replace: "![$|$]({{clipboard}})"
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
+  # link with clipboard 
+  - trigger: ";mdlink"
+    replace: "[$|$]({{clipboard}})"
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
+  # My blog Meta base
+  - trigger: ";blogmeta"
+    replace: |
+             title: $|$
+             date: {{mydate}}
+             tag:
+              - misc
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
