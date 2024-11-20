@@ -1,6 +1,14 @@
 #!/bin/bash
 ## respect to https://github.com/tanish-kr/dotfiles/blob/master/dotfiles.sh
 
+
+is_mac=$([ "$(uname)" == 'Darwin' ] && echo "true" || echo "false")
+
+is_linux=$([ "$(expr substr $(uname -s) 1 5)" == 'Linux' ] && echo "true" || echo "false")
+
+echo "a: $is_mac"
+echo "b: $is_linux"
+
 # 読み込み用
 # dotfiles=($(find `pwd` -mindepth 1 -maxdepth 2 -regex ".*\/\..*" \
 #     -not -type d \
@@ -16,7 +24,6 @@ dotfiles+=("$(pwd)/.zshrc")
 dotfiles+=("$(pwd)/.zshenv")
 dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
-dotfiles+=("$(pwd)/.alacritty.toml")
 dotfiles+=("$(pwd)/.config/nvim/init.vim")
 dotfiles+=("$(pwd)/.config/espanso/config/default.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/base.yml")
@@ -24,16 +31,14 @@ dotfiles+=("$(pwd)/.config/espanso/match/coding.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/markdown.yml")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
-## OS X
-if [ "$(uname)" == 'Darwin' ]; then
-    ## yabai
+if [ "$is_mac" == "true" ]; then
     dotfiles+=("$(pwd)/.yabairc")
     dotfiles+=("$(pwd)/.skhdrc")
-## Linux
-elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
-    ## Linux用の処理
-    echo "this is linux"
+    dotfiles+=("$(pwd)/.alacritty.osx.toml")
+elif [ "$is_linux" == "true" ]; then
+    dotfiles+=("$(pwd)/.alacritty.linux.toml")
 fi
+
 
 ## 展開用
 # home_dotsfile=($(find $HOME -maxdepth 1 -regex ".*\/\..*" \
@@ -48,7 +53,7 @@ home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.alacritty.toml")
 home_dotsfile+=("$HOME/.config/nvim/init.vim")
 ## OS X
-if [ "$(uname)" == 'Darwin' ]; then
+if [ "$is_mac" == "true" ]; then
     ## yabai
     home_dotsfile+=("$HOME/.yabairc")
     home_dotsfile+=("$HOME/.skhdrc")
@@ -56,8 +61,7 @@ if [ "$(uname)" == 'Darwin' ]; then
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/Library/Application Support/Code/User/settings.json")
 ## Linux
-elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
-    echo "hoge"
+elif [ "$is_linux" == "true" ]; then
     ## vscode
     home_dotsfile+=("$HOME/.config/Code/User/keybindings.json")
     home_dotsfile+=("$HOME/.config/Code/User/settings.json")
@@ -80,11 +84,11 @@ set_links() {
   for file_name in "${dotfiles[@]}"; do
     ### ./vscode ###
     if [[ "$file_name" =~ \/vscode\/.+\.json$ ]]; then
-      if [ "$(uname)" == 'Darwin' ]; then
-        ln -svf "$file_name" "$HOME/Library/Application Support/Code/User"
-      elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
-        ln -svf "$file_name" "$HOME/.config/Code/User"
-      fi
+        if [ "$(uname)" == 'Darwin' ]; then
+            ln -svf "$file_name" "$HOME/Library/Application Support/Code/User"
+        elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+            ln -svf "$file_name" "$HOME/.config/Code/User"
+        fi
     ### nvim ###
     elif [[ "$file_name" =~ \/\.config\/nvim.+$ ]]; then
         ln -svf "$file_name" "$HOME/.config/nvim/"
@@ -93,6 +97,9 @@ set_links() {
         ln -svf "$file_name" "$HOME/.config/espanso/config/"
     elif [[ "$file_name" =~ \/\.config\/espanso/match.+$ ]]; then
         ln -svf "$file_name" "$HOME/.config/espanso/match/"
+    ### alacritty ### 
+    elif [[ "$file_name" =~ \/.alacritty.+$ ]]; then
+        ln -svf "$file_name" "$HOME/.alacritty.toml"
     ### ./ ###
     else
       ln -svf "$file_name" "$HOME"
