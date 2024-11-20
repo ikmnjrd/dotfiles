@@ -22,6 +22,16 @@ GIT_PS1_SHOWUPSTREAM=auto
 setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 export PATH="/usr/local/sbin:$PATH"
 
+
+# history設定
+HISTFILE=~/.zsh_history
+HISTSIZE=10000              # メモリ上で保持する最大件数
+SAVEHIST=10000              # ファイルに保持する最大件数
+setopt APPEND_HISTORY       # 履歴を追記
+setopt INC_APPEND_HISTORY   # コマンド実行後に履歴を即日以下
+setopt SHARE_HISTORY        # 全セッション間で履歴を共有
+setopt EXTENDED_HISTORY     # 履歴にタイムスタンプを記録
+
 ## bat設定
 export BAT_THEME="Nord"
 
@@ -135,3 +145,6 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 
 ### for auto-commit
 export PATH="$PATH:$HOME/.bin"
+
+### for Rust
+export PATH="$HOME/.cargo/bin:$PATH"

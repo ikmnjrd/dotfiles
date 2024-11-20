@@ -1,6 +1,3 @@
-## Rust
-#. "$HOME/.cargo/env" # 「.」はsourceと同義
-
 ## Python
 #alias python='/usr/bin/python3'
 
@@ -30,3 +27,4 @@ alias tree='tree -C -I $((cat .gitignore 2> /dev/null || cat $(git rev-parse --s
 
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -o -selection clipboard"
+alias his='fc -l -t "%Y-%m-%d %H:%M:%S "'
