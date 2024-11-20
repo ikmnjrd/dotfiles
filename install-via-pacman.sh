@@ -14,4 +14,8 @@ pacman -S \
   fcitx5-mozc \
   neofetch \
   xclip \
-  tig
+  rustup \
+  p7zip \
+  tree
+
+# rustupインストール後、`rustup dafault stable`を実行
