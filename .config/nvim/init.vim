@@ -12,9 +12,15 @@ Plug 'lambdalisue/gina.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'shaunsingh/nord.nvim'
-"Plug 'ikmnjrd/vim-im-select'
-"Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
+Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
 Plug 'ellisonleao/glow.nvim'
+
+if system('uname') =~ 'Darwin'
+  " macOS 用の設定
+  Plug 'ikmnjrd/vim-im-select'
+elseif system('uname') =~ 'Linux'
+  " Linux 用の設定
+endif
 
 call plug#end()
 
@@ -34,21 +40,31 @@ set tabstop=2 "タブに変換されるサイズ
 set shiftwidth=2
 set smartindent
 
-"" indent_blankline
-"lua << EOF
-"vim.opt.list = true
-"vim.opt.listchars:append "space:⋅"
-"vim.opt.listchars:append "eol:↴"
-"
-"require("ibl").setup {
-"  show_end_of_line = true,
-"  space_char_blankline = " ",
-"}
-"
-"EOF
 
-" vim-im-select
-let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
+"" indent_blankline
+lua << EOF
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append "eol:↴"
+require("ibl").setup {}
+EOF
+
+
+"" vim-im-select
+if system('uname') =~ 'Darwin'
+  " macOS 用の設定
+  let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
+elseif system('uname') =~ 'Linux'
+  " Linux 用の設定
+  augroup fcitx5_integration
+  autocmd!
+  autocmd InsertLeave * :call system('fcitx5-remote -c')
+  augroup END
+endif
+
+
+" for Linux 
+
 
 " map prefix
 let g:mapleader = "\<Space>"
