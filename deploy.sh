@@ -94,9 +94,17 @@ set_links() {
         ln -svf "$file_name" "$HOME/.config/nvim/"
     ### espanso ###
     elif [[ "$file_name" =~ \/\.config\/espanso/config.+$ ]]; then
-        ln -svf "$file_name" "$HOME/.config/espanso/config/"
+        if [ "$is_mac" == "true" ]; then
+            ln -svf "$file_name" "$HOME/Library/Application Support/espanso/config/"
+        else
+            ln -svf "$file_name" "$HOME/.config/espanso/config/"
+        fi
     elif [[ "$file_name" =~ \/\.config\/espanso/match.+$ ]]; then
-        ln -svf "$file_name" "$HOME/.config/espanso/match/"
+        if [ "$is_mac" == "true" ]; then
+            ln -svf "$file_name" "$HOME/Library/Application Support/espanso/match/"
+        else
+            ln -svf "$file_name" "$HOME/.config/espanso/match/"
+        fi
     ### alacritty ### 
     elif [[ "$file_name" =~ \/.alacritty.+$ ]]; then
         ln -svf "$file_name" "$HOME/.alacritty.toml"
