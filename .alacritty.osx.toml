@@ -58,29 +58,20 @@ text = "#2e3440"
 
 [font]
 ## for OS X
-#size = 12.6
-## for Linux
-size = 8.5
+size = 12.6
 
 [font.normal]
-## for Linux
-family = "Source Code Pro"
 ## for OX X
-#family = "Monaco"
 style = "Regular"
 
 [font.bold]
-## for Linux
-family = "Source Code Pro"
-## for OX X
-#family = "Monaco"
+## for OS X
+family = "Monaco"
 style = "Bold"
 
 [font.italic]
-## for Linux
-family = "Source Code Pro"
 ## for OX X
-#family = "Monaco"
+family = "Monaco"
 style = "Italic"
 
 [font.offset]
@@ -93,16 +84,12 @@ y = 0
 
 [shell]
 ## for OS X
-#args = ["-l", "-c", "tmux attach || tmux new -s default"]
-program = "/bin/zsh"
+args = ["-l", "-c", "tmux attach || tmux new -s default"]
+#program = "/bin/zsh"
 
 [window]
 ## for OS X
-#decorations = "buttonless"
-## for Linux
-#decorations = "None"
-## for i3wm
-decorations = "full"
+decorations = "buttonless"
 dynamic_padding = true
 opacity = 0.9
 startup_mode = "Windowed"
