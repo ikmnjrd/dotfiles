@@ -34,6 +34,7 @@ dotfiles+=("$(pwd)/.config/espanso/match/apple-symbol.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/curl.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/hax.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/all-emoji.yml")
+dotfiles+=("$(pwd)/.config/git/ignore")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
 if [ "$is_mac" == "true" ]; then
@@ -97,6 +98,9 @@ set_links() {
     ### nvim ###
     elif [[ "$file_name" =~ \/\.config\/nvim.+$ ]]; then
         ln -svf "$file_name" "$HOME/.config/nvim/"
+    ### .config/git
+    elif [[ "$file_name" =~ \/.config\/git\/.+$ ]]; then
+        ln -svf "$file_name" "$HOME/.config/git/"
     ### espanso ###
     elif [[ "$file_name" =~ \/\.config\/espanso/config.+$ ]]; then
         if [ "$is_mac" == "true" ]; then
