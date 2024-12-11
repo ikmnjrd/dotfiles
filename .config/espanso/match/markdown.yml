@@ -4,8 +4,13 @@ matches:
   - trigger:  ";mdcode"
     replace: "```$|$\n```"
 
+  # detail
   - trigger: ";mddetail"
     replace: "<details>\n  <summary>$|$</summary>\n  <p></p>\n</details>"
+
+  # empty checkbox. 丸括弧内には優先度を[A-Z]で書く
+  - trigger: ";mdch"
+    replace: "- [ ] ($|$)"
 
   # image with clipboard
   - trigger: ";mdimg"
