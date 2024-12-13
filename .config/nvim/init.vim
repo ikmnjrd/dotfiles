@@ -109,6 +109,7 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-prisma',
   \ 'coc-rust-analyzer',
+  \ 'coc-deno',
   \ ]
 
 inoremap <silent> <expr>  <C-Space> coc#refresh()
