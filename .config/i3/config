@@ -61,7 +61,7 @@ gaps inner 6
 gaps outer 3
 
 # show window title bars (not officially supported with i3gaps)
-#default_border normal
+default_border pixel 2
 
 # window title alignment
 #title_align center
@@ -419,6 +419,8 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 # https://wiki.archlinux.org/title/Session_lock#xautolock
 #exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
 
+# キーリピート間隔を設定
+exec --no-startup-id xset r rate 150 50
 
 # xscreensaver
 # https://www.jwz.org/xscreensaver
