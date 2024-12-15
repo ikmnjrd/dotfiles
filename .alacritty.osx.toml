@@ -1,3 +1,9 @@
+live_config_reload = true
+
+[env]
+## https://medium.com/@jogarcia/bring-on-the-true-color-on-alacritty-tmux-neovim-99134521731d
+term = "xterm-256color"
+
 [colors]
 draw_bold_text_with_bright_colors = true
 
@@ -58,7 +64,7 @@ text = "#2e3440"
 
 [font]
 ## for OS X
-size = 12.6
+size = 14.6
 
 [font.normal]
 ## for OX X

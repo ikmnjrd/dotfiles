@@ -28,3 +28,5 @@ alias tree='tree -C -I $((cat .gitignore 2> /dev/null || cat $(git rev-parse --s
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -o -selection clipboard"
 alias his='fc -l -t "%Y-%m-%d %H:%M:%S "'
+alias icloud="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
+alias check-truecolor="curl -s https://gist.githubusercontent.com/lifepillar/09a44b8cf0f9397465614e622979107f/raw/24-bit-color.sh | bash"
