@@ -1,3 +1,6 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/ike/.zsh/completions:"* ]]; then export FPATH="/home/ike/.zsh/completions:$FPATH"; fi
+source ~/.deno/env
 # git-propmtの読み込み
 source ~/.zsh/git-prompt.sh
 

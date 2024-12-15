@@ -91,7 +91,7 @@ y = 0
 [shell]
 ## for OS X
 args = ["-l", "-c", "tmux attach || tmux new -s default"]
-#program = "/bin/zsh"
+#program = "/usr/bin/zsh"
 
 [window]
 ## for OS X

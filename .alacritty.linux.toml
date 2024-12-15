@@ -80,7 +80,7 @@ y = 0
 x = 0
 y = 0
 
-[shell]
+[terminal.shell]
 program = "/usr/bin/zsh"
 args = ["--login"]
 
