@@ -37,6 +37,7 @@ dotfiles+=("$(pwd)/.config/espanso/match/all-emoji.yml")
 dotfiles+=("$(pwd)/.config/git/ignore")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
+dotfiles+=("$(pwd)/.alacritty.base.toml")
 if [ "$is_mac" == "true" ]; then
     dotfiles+=("$(pwd)/.yabairc")
     dotfiles+=("$(pwd)/.skhdrc")
@@ -115,6 +116,8 @@ set_links() {
             ln -svf "$file_name" "$HOME/.config/espanso/match/"
         fi
     ### alacritty ### 
+    elif [[ "$file_name" =~ \/.alacritty.base.toml$ ]]; then
+        ln -svf "$file_name" "$HOME/.alacritty.base.toml"
     elif [[ "$file_name" =~ \/.alacritty.+$ ]]; then
         ln -svf "$file_name" "$HOME/.alacritty.toml"
     ### ./ ###
