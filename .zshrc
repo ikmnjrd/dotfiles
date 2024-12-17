@@ -1,6 +1,8 @@
 # Add deno completions to search path
 if [[ ":$FPATH:" != *":/home/ike/.zsh/completions:"* ]]; then export FPATH="/home/ike/.zsh/completions:$FPATH"; fi
-source ~/.deno/env
+if [[ -f ~/.deno/env ]]; then
+  source ~/.deno/env
+fi
 # git-propmtの読み込み
 source ~/.zsh/git-prompt.sh
 
@@ -50,8 +52,9 @@ export FZF_CTRL_R_OPTS="
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 bindkey "ç" fzf-cd-widget # for Mac, keybinding option+c sends ç
 # for My EndavourOS https://github.com/junegunn/fzf/issues/1190
-source /usr/share/fzf/key-bindings.zsh
-
+if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
+  source /usr/share/fzf/key-bindings.zsh
+fi
 # fbr - checkout git branch
 function fbr() {
   local branches branch
