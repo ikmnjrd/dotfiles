@@ -27,10 +27,11 @@ call plug#end()
 " set options
 set termguicolors
 set number
-set clipboard=unnamed "クリップボードへの登録
+set clipboard=unnamedplus "クリップボードへの登録
 set shell=/bin/zsh "コマンド実行にzshを使う
 set history=200 "Exコマンド履歴保持数
 set incsearch "検索入力時からマッチ
+set nrformats=octal,hex,alpha "インクリメント対象にアルファベットを追加
 "" Indent
 set autoindent
 set breakindent " 行を折り返すときにインデントを考慮
@@ -39,6 +40,38 @@ set nostartofline
 set tabstop=2 "タブに変換されるサイズ
 set shiftwidth=2
 set smartindent
+
+"" for Todo.txt
+lua << EOF
+local function change_priority()
+  -- Vim の input() 関数をLuaから呼び出して、対話的に入力を受け取る
+  local oldPri = vim.fn.input('Old Priority (e.g. A): ')
+  local newPri = vim.fn.input('New Priority (e.g. B): ')
+
+  -- A～Z の一文字だけかどうかチェック
+  if string.match(oldPri, '^[A-Z]$') and string.match(newPri, '^[A-Z]$') then
+    -- ここでグローバルコマンドを使い、「- [x]」を含む行は除外して置換を実行
+    -- 例えば "(A)" を "(B)" に置き換える
+    local cmd = string.format("g!/- \\[x\\]/ s/(%s)/(%s)/g", oldPri, newPri)
+    vim.cmd(cmd)
+
+    print(
+      string.format("Replaced priority from (%s) to (%s) (excluding lines that have - [x])", oldPri, newPri)
+    )
+  else
+    print("Invalid priority input!")
+  end
+end
+
+-- Luaでユーザーコマンドを作成
+vim.api.nvim_create_user_command(
+  'ChangePriority',
+  function()
+    change_priority()
+  end,
+  {}
+)
+EOF
 
 
 "" indent_blankline
@@ -61,9 +94,6 @@ elseif system('uname') =~ 'Linux'
   autocmd InsertLeave * :call system('fcitx5-remote -c')
   augroup END
 endif
-
-
-" for Linux 
 
 
 " map prefix
