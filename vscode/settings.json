@@ -67,7 +67,7 @@
     //"<C-t>": false,
     //"<C-u>": false,
     //"<C-v>": false,
-    //"<C-w>": false,
+    "<C-w>": false,
     //"<C-x>": false,
     //"<C-y>": false,
     //"<C-z>": false
