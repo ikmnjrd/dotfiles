@@ -10,7 +10,10 @@
     }
   },
   "terminal.integrated.defaultProfile.windows": "",
+  "terminal.integrated.fontFamily": "Consolas, Source Code Pro",
   "editor.tabSize": 2,
+  "editor.fontFamily": "Consolas, Source Code Pro",
+  "editor.fontLigatures": true,
   "editor.bracketPairColorization.enabled": true,
   "workbench.editor.splitInGroupLayout": "vertical",
   "redhat.telemetry.enabled": false,
