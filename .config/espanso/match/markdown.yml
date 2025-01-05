@@ -26,6 +26,14 @@ matches:
       - name: "clipboard"
         type: "clipboard"
 
+  # link with clipboard 
+  - trigger: ";mdtable"
+    replace: |
+      | Center 1 | Center 2 | Center 3 |
+      |:--------:|:--------:|:--------:|
+      |  Cell 1  |  Cell 2  |  Cell 3  |
+      |  Cell 4  |  Cell 5  |  Cell 6  |
+
   # My blog Meta base
   - trigger: ";blogmeta"
     replace: |
