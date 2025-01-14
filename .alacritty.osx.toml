@@ -1,3 +1,6 @@
+[general]
+import=["./.alacritty.base.toml"]
+
 [font]
 size = 14.6
 
@@ -12,8 +15,8 @@ style = "Bold"
 family = "Monaco"
 style = "Italic"
 
-[shell]
-args = ["-l", "-c", "tmux attach || tmux new -s default"]
+#[terminal.shell]
+#args = "tmux attach || tmux new -s default"
 #program = "/usr/bin/zsh"
 
 [window]

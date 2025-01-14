@@ -43,7 +43,7 @@ set smartindent
 "" vim-im-select
 if system('uname') =~ 'Darwin'
   " macOS 用の設定
-  let g:im_select_default = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Roman'
+  let g:im_select_default = 'com.apple.keylayout.ABC'
 elseif system('uname') =~ 'Linux'
   " Linux 用の設定
   augroup fcitx5_integration
@@ -87,6 +87,11 @@ else
   "" https://github.com/volta-cli/volta/issues/866
   if executable('volta')
     let g:node_host_prog = trim(system("volta which neovim-node-host"))
+  endif
+
+  "" for Mac python provider(:pyx command)
+  if system('uname') =~ 'Darwin'
+    let g:python3_host_prog = expand('~/.local/nvim-venv/bin/python3')
   endif
 
   "" coc.nvim
