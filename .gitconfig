@@ -18,6 +18,10 @@
 	s    = status
 	b    = branch
   bd   = branch --delete
+  bds = "!f() { \
+           prefix=\"$1\"; \
+           git branch --list \"${prefix}*\" --format \"%(refname:short)\" | xargs -r git branch -d; \
+         }; f"
 
   sw   = switch
   swc  = switch -c
@@ -44,5 +48,6 @@
 	logg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 
   rename-js-to-ts = "!f() { git ls-files \"$1\"*.js | while read file; do git mv \"$file\" \"${file%.js}.ts\"; done; }; f"
+
 [rebase]
 	autoStash = true
