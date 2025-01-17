@@ -1,29 +1,26 @@
-" this is how a comment looks like in ~/.vimrc
-
-" https://zenn.dev/yano/articles/vim_frontend_development_2021
 " Install Plugin
 call plug#begin('~/.vim/plugged')
-
-Plug 'vim-jp/vimdoc-ja'
-Plug 'junegunn/fzf', {'dir': '~/.fzf_bin', 'do': './install --all'}
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lambdalisue/gina.vim'
-Plug 'lambdalisue/fern.vim'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'shaunsingh/nord.nvim'
-Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
-Plug 'ellisonleao/glow.nvim'
-
 if system('uname') =~ 'Darwin'
-  " macOS 用の設定
   Plug 'ikmnjrd/vim-im-select'
 elseif system('uname') =~ 'Linux'
-  " Linux 用の設定
 endif
 
+if exists('g:vscode')
+else
+  Plug 'vim-jp/vimdoc-ja'
+  Plug 'junegunn/fzf', {'dir': '~/.fzf_bin', 'do': './install --all'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'lambdalisue/gina.vim'
+  Plug 'lambdalisue/fern.vim'
+  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'shaunsingh/nord.nvim'
+  Plug 'lukas-reineke/indent-blankline.nvim' " indent-highlight
+  Plug 'ellisonleao/glow.nvim'
+endif
 call plug#end()
 
-" set options
+" 共通設定
+"" set options
 set termguicolors
 set number
 set clipboard=unnamedplus "クリップボードへの登録
@@ -31,54 +28,47 @@ set shell=/bin/zsh "コマンド実行にzshを使う
 set history=200 "Exコマンド履歴保持数
 set incsearch "検索入力時からマッチ
 set nrformats=octal,hex,alpha "インクリメント対象にアルファベットを追加
-"" Indent
-set autoindent
-set breakindent " 行を折り返すときにインデントを考慮
-set expandtab "タブの入力にスペース
-set nostartofline
-set tabstop=2 "タブに変換されるサイズ
-set shiftwidth=2
-set smartindent
+set nocompatible
+filetype plugin on
+runtime macros/matchit.vim
 
-"" vim-im-select
+"" map prefix
+let g:mapleader = "\<Space>"
+nnoremap <Leader> <Nop>
+xnoremap <Leader> <Nop>
+""" ヤンクに入れないで削除
+nnoremap <Leader>d "_d
+xnoremap <Leader>d "_d
+
+" vim-im-select
 if system('uname') =~ 'Darwin'
-  " macOS 用の設定
   let g:im_select_default = 'com.apple.keylayout.ABC'
 elseif system('uname') =~ 'Linux'
-  " Linux 用の設定
   augroup fcitx5_integration
   autocmd!
   autocmd InsertLeave * :call system('fcitx5-remote -c')
   augroup END
 endif
 
+" for Mac python provider(:pyx command)
+if system('uname') =~ 'Darwin'
+  let g:python3_host_prog = expand('~/.local/nvim-venv/bin/python3')
+endif
 
-" map prefix
-let g:mapleader = "\<Space>"
-nnoremap <Leader> <Nop>
-xnoremap <Leader> <Nop>
-nnoremap [dev]    <Nop>
-xnoremap [dev]    <Nop>
-nmap     m        [dev]
-xmap     m        [dev]
-nnoremap [ff]     <Nop>
-xnoremap [ff]     <Nop>
-nmap     z        [ff]
-xmap     z        [ff]
-
-"" カーソル位置による表示の調整
-""" https://dackdive.hateblo.jp/entry/2014/05/20/183756
-nnoremap <silent> [ff]. z.
-nnoremap <silent> [ff]z zz
-nnoremap <silent> [ff]t zt
-nnoremap <silent> [ff]<CR> z<CR>
-nnoremap <silent> [ff]b zb
-nnoremap <silent> [ff]- z-
 
 if exists('g:vscode')
   " VSCode extension
 else
   " ordinary Neovim
+  "" set options
+  set autoindent
+  set breakindent " 行を折り返すときにインデントを考慮
+  set expandtab "タブの入力にスペース
+  set nostartofline
+  set tabstop=2 "タブに変換されるサイズ
+  set shiftwidth=2
+  set smartindent
+
   "" disable languages surpport
   let g:loaded_ruby_provider = 0
   let g:loaded_perl_provider = 0
@@ -87,11 +77,6 @@ else
   "" https://github.com/volta-cli/volta/issues/866
   if executable('volta')
     let g:node_host_prog = trim(system("volta which neovim-node-host"))
-  endif
-
-  "" for Mac python provider(:pyx command)
-  if system('uname') =~ 'Darwin'
-    let g:python3_host_prog = expand('~/.local/nvim-venv/bin/python3')
   endif
 
   "" coc.nvim
@@ -108,18 +93,6 @@ else
     \ 'coc-deno',
     \ ]
 
-  inoremap <silent> <expr>  <C-Space> coc#refresh()
-  nnoremap <silent> K       :<C-u>call <SID>show_documentation()<CR>
-  nmap     <silent> [dev]rn <Plug>(coc-rename)
-  nmap     <silent> [dev]a  <Plug>(coc-codeaction-selected)iw
-  nmap     <silent> gd      <Plug>(coc-definition)
-  nmap     <silent> [dev]f  <Plug>(coc-format)
-  nmap     <silent> gi      <Plug>(coc-implementation)
-
-  function! s:coc_typescript_settings() abort
-    nnoremap <silent> <buffer> [dev]f :<C-u>CocCommand eslint.executeAutofix<CR>:CocCommand prettier.formatFile<CR>
-  endfunction
-
   augroup coc_ts
     autocmd!
     autocmd FileType typescript,typescriptreact call <SID>coc_typescript_settings()
@@ -132,20 +105,6 @@ else
       call CocActionAsync('doHover')
     endif
   endfunction
-
-  "" fzf-preview
-  nnoremap <silent> <C-p>  :<C-u>CocCommand fzf-preview.FromResources buffer project_mru project<CR>
-  nnoremap <silent> [ff]s  :<C-u>CocCommand fzf-preview.GitStatus<CR>
-  nnoremap <silent> [ff]gg :<C-u>CocCommand fzf-preview.GitActions<CR>
-  nnoremap <silent> [ff]u  :<C-u>CocCommand fzf-preview.Buffers<CR>
-  nnoremap          [ff]f  :<C-u>CocCommand fzf-preview.ProjectGrep --add-fzf-arg=--exact --add-fzf-arg=--no-sort<Space>
-  xnoremap          [ff]f  "sy:CocCommand fzf-preview.ProjectGrep --add-fzf-arg=--exact --add-fzf-arg=--no-sort<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-
-  nnoremap <silent> [ff]q  :<C-u>CocCommand fzf-preview.CocCurrentDiagnostics<CR>
-  nnoremap <silent> [ff]rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
-  nnoremap <silent> [ff]d  :<C-u>CocCommand fzf-preview.CocDefinition<CR>
-  nnoremap <silent> [ff]i  :<C-u>CocCommand fzf-preview.CocTypeDefinition<CR>
-  nnoremap <silent> [ff]o  :<C-u>CocCommand fzf-preview.CocOutline --add-fzf-arg=--exact --add-fzf-arg=--no-sort<CR>
 
   "" fern
   nnoremap <silent> <Leader>e :<C-u>Fern . -drawer<CR>
@@ -161,13 +120,7 @@ else
 
   " Load the colorscheme
   colorscheme nord
-
-  "" ビルトインプラグイン
-  set nocompatible
-  filetype plugin on
-  runtime macros/matchit.vim
 endif
-
 
 lua <<EOF
 if vim.g.vscode then
