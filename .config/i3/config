@@ -420,7 +420,8 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 #exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
 
 # キーリピート間隔を設定
-exec --no-startup-id xset r rate 150 50
+# 動かなかった。ので、.xprofileに記述する
+#exec --no-startup-id xset r rate 150 50
 
 # xscreensaver
 # https://www.jwz.org/xscreensaver
