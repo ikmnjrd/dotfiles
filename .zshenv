@@ -20,6 +20,7 @@ alias tree='tree -C -I $((cat .gitignore 2> /dev/null || cat $(git rev-parse --s
 alias his='fc -l -t "%Y-%m-%d %H:%M:%S "'
 alias icloud="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
 alias truecolor="curl -s https://gist.githubusercontent.com/lifepillar/09a44b8cf0f9397465614e622979107f/raw/24-bit-color.sh | bash"
+alias ollama="docker run -d --device /dev/kfd --device /dev/dri -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama:rocm"
 # Macのみの設定
 if [[ "$(uname)" == "Darwin" ]]; then
   alias ls="ls -G"
@@ -33,7 +34,7 @@ if [[ "$(uname)" == "Linux" ]]; then
   alias ls="ls --color=auto"
   alias ll="ls -l --color=auto"
   alias l="ls -al --color=auto"
-  
+  alias beep="echo -e '\a'"
   # xclip
   alias pbcopy="xclip -selection clipboard"
   alias pbpaste="xclip -o -selection clipboard"
