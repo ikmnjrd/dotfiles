@@ -16,6 +16,12 @@ pacman -S \
   xclip \
   rustup \
   p7zip \
-  tree
+  tree \
+  docker \
+  docker-compose \
+  xorg-xhost \
+  git-lfs \
+  ollama
 
 # rustupインストール後、`rustup dafault stable`を実行
+# xorg-xhost: dockerで起動したアプリケーションをGUIで表示するため
