@@ -61,7 +61,7 @@ gaps inner 6
 gaps outer 3
 
 # show window title bars (not officially supported with i3gaps)
-default_border pixel 2
+#default_border normal
 
 # window title alignment
 #title_align center
@@ -146,16 +146,17 @@ bindcode $mod+Shift+81 	 move container to workspace  $ws9
 bindcode $mod+Shift+90 	 move container to workspace  $ws10
 
 # resize window (you can also use the mouse for that):
+set $resize_delta 15
 mode "resize" {
-        bindsym h resize shrink width 5 px or 5 ppt
-        bindsym j resize grow height 5 px or 5 ppt
-        bindsym k resize shrink height 5 px or 5 ppt
-        bindsym l resize grow width 5 px or 5 ppt
+        bindsym h resize shrink width $resize_delta px or $resize_delta ppt
+        bindsym j resize grow height $resize_delta px or $resize_delta ppt
+        bindsym k resize shrink height $resize_delta px or $resize_delta ppt
+        bindsym l resize grow width $resize_delta px or $resize_delta ppt
 
-	bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
+	bindsym Left resize shrink width $resize_delta px or $resize_delta ppt
+        bindsym Down resize grow height $resize_delta px or $resize_delta ppt
+        bindsym Up resize shrink height $resize_delta px or $resize_delta ppt
+        bindsym Right resize grow width $resize_delta px or $resize_delta ppt
 
 	bindsym Return mode "default"
 	bindsym q mode "default"
@@ -288,13 +289,14 @@ bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 #bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+w exec --no-startup-id /usr/bin/brave
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
-# bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
-bindsym --release Print exec --no-startup-id maim -s ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S")-screenshot.png && notify-send "Screenshot saved to ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S")-screenshot.png"
+bindsym Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
 
 # 録画範囲を選択してビデオをキャプチャするバインド
-bindsym $mod+Shift+v exec --no-startup-id ~/workspace/dotfiles/.config/i3/scripts/record_area.sh
-# 範囲指定録画の停止
-bindsym $mod+Shift+s exec --no-startup-id ~/workspace/dotfiles/.config/i3/scripts/stop_recording.sh
+bindsym $mod+Shift+i exec --no-startup-id slop=$(slop -f "%x,%y %w,%h") && \
+output_file="/tmp/$(date +'%Y-%m-%d')-screenshot.mp4" && \
+#ffmpeg -f x11grab -video_size $(echo $slop | cut -d' ' -f2) -i :0.0+$(echo $slop | cut -d' ' -f1) -framerate 25 -vcodec libx264 "$output_file" && \
+#mv "$output_file" ~/Videos/
+
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -331,12 +333,6 @@ set $ws10 "10"
 #assign [class="Thunar"] $ws3
 #assign [class="thunderbird"] $ws4
 #assign [class="TelegramDesktop"] $ws5
-
-assign [class="Slack"] $ws1
-assign [class="Discord"] $ws1
-
-exec --no-startup-id slack
-exec --no-startup-id com.discordapp.Discord
 
 # automatic set focus new window if it opens on another workspace than the current:
 #for_window [class=Xfce4-terminal] focus
@@ -399,6 +395,9 @@ exec --no-startup-id dex --autostart --environment i3
 #exec --no-startup-id setxkbmap -layout 'us,sk' -variant altgr-intl,qwerty -option 'grp:alt_caps_toggle'
 
 # start conky:
+#exec --no-startup-id setxkbmap -layout 'us,sk' -variant altgr-intl,qwerty -option 'grp:alt_caps_toggle'
+
+# start conky:
 #exec_always --no-startup-id conky
 
 # start a script to setup displays
@@ -410,7 +409,8 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 exec --no-startup-id sleep 1 && feh --bg-fill /usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 600 600 600
+# 2時間で画面暗転、2時間半でサスペンド
+exec --no-startup-id xset s 7200 dpms 7200 9000 9000
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
@@ -500,17 +500,9 @@ set $darkblue		#08052b
 set $lightblue		#5294e2
 set $urgentred		#e53935
 set $white		#ffffff
-set $black		#000000
-set $purple		#e345ff
-set $darkgrey		#383c4a
-set $grey		#b0b5bd
-set $mediumgrey		#8b8b8b
-set $yellowbrown	#e1b700
-set $brightgreen 	#00ff00
-
 # define colors for windows:
 #class		        	border		bground		text		indicator	child_border
-client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$brightgreen
+client.focused		    	$lightblue	$darkblue	$white		$mediumgrey	$mediumgrey
 client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
 client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
 client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
@@ -598,4 +590,3 @@ bindsym $mod+t exec --no-startup-id rofi -show window \
 		-config ~/.confireenclip daemon>/dev/null
 #bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard \
 #		-config ~/.config/rofi/rofidmenu.rasi
-
