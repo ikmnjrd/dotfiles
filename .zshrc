@@ -165,5 +165,7 @@ export VOLTA_FEATURE_PNPM=1
 
 ### for Rust
 export PATH="$HOME/.cargo/bin:$PATH"
+### for Android Studio(Linux)
+export CAPACITOR_ANDROID_STUDIO_PATH="/usr/bin/android-studio"
 
 export PATH="/opt/homebrew/opt/mysql-client@8.0/bin:$PATH"
