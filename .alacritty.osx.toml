@@ -32,3 +32,6 @@ y = 0
 [window.position]
 x = 100
 y = 1600
+
+[bell]
+command = { program = "osascript", args = ["-e", "beep"] }

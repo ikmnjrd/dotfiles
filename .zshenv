@@ -25,6 +25,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
   alias ls="ls -G"
   alias ll="ls -lG"
   alias l="ls -alG"
+  alias beep="afplay /System/Library/Sounds/Submarine.aiff"
 fi
 
 # Linuxのみの設定

@@ -62,6 +62,22 @@ function fbr() {
   branch=$(echo "$branches" | fzf +m) &&
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
+
+# select_worktree - interactively select and navigate to a git worktree
+function select_worktree() {
+  local worktrees
+  worktrees=$(git worktree list --porcelain | awk '/worktree / {print $2}')
+  if [[ -z "$worktrees" ]]; then
+    echo "No worktrees found."
+    return 1
+  fi
+  local selected
+  selected=$(echo "$worktrees" | fzf)
+  if [[ -n "$selected" ]]; then
+    echo "$selected"
+    cd "$selected"
+  fi
+}
 # # fbr - checkout git branch
 # function fzf-checkout-branch() {
 #   local branches branch
@@ -150,3 +166,4 @@ export VOLTA_FEATURE_PNPM=1
 ### for Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/mysql-client@8.0/bin:$PATH"
