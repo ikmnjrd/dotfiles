@@ -34,7 +34,7 @@ if [[ "$(uname)" == "Linux" ]]; then
   alias ls="ls --color=auto"
   alias ll="ls -l --color=auto"
   alias l="ls -al --color=auto"
-  alias beep="echo -e '\a'"
+  alias beep="paplay /usr/share/sounds/freedesktop/stereo/bell.oga"
   # xclip
   alias pbcopy="xclip -selection clipboard"
   alias pbpaste="xclip -o -selection clipboard"

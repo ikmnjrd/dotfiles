@@ -1,0 +1,5 @@
+# /usr/local/bin/alacritty-bell   ※好きな場所・名前でOK
+#!/bin/sh
+# 最初の 2 つの引数 "-e" "beep" を捨てて残りを無視
+shift 2
+exec paplay /usr/share/sounds/freedesktop/stereo/bell.oga
