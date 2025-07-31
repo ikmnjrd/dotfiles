@@ -75,5 +75,14 @@
          }; f"
   wd   = worktree remove .
 
+  # Pull Request
+  pr = "!f() { \
+         current_branch=$(git rev-parse --abbrev-ref HEAD); \
+         default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo 'main'); \
+         read -p 'PRタイトルを入力: ' title; \
+         read -p 'PRボディーを入力: ' body; \
+         gh pr create --base \"$default_branch\" --head \"$current_branch\" --title \"$title\" --body \"$body\"; \
+       }; f"
+
 [rebase]
 	autoStash = true
