@@ -1,14 +1,15 @@
 # 構築
 ## Linux
 
-1. ./install-via-pacman.
-2. ./deploy
+1. ./install-via-pacman.sh
+2. ./deploy.sh set
 3. source ~/.zshrc
 
 ## Mac
 
-1. ./zshrc
-2. source ~/.zshrc
+1. brew bundle --file Brewfile
+2. ./deploy.sh set
+3. source ~/.zshrc
 
 
 ## Homebrew
@@ -16,7 +17,7 @@
 [manpage](https://docs.brew.sh/Manpage#bundle-subcommand)
 
 # 運用
-`.alacritty.toml`などのファイル内部でOSごとの設定を切り替えられないものは`.alacritty.linux.toml`や`.alacritty.osx.toml`としてそれぞれ管理する
+ターミナルは `wezterm` を使う。設定は [`.wezterm.lua`](/Users/ike/workspace/dotfiles/.wezterm.lua) で OS ごとに分岐する。既存の `.alacritty.*` は退避用として残してある。
 
 # お気持ち
 ## Color Scheme

@@ -45,5 +45,5 @@ cask "postman"
 cask "tweeten"
 cask "spotify"
 cask "gyazo"
+cask "wezterm"
 cask "session-manager-plugin"
-
