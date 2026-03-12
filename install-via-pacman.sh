@@ -4,7 +4,7 @@ pacman -S \
   fzf \
   zsh \
   ripgrep \
-  alacritty \
+  wezterm \
   tmux \
   ttf-sourcecodepro-nerd \
   noto-fonts-cjk \
