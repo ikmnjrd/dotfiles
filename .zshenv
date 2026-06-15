@@ -7,6 +7,7 @@ if [ -f ~/.secrets ]; then
 fi
 
 ## aliases
+alias g="git"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"

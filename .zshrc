@@ -1,5 +1,8 @@
-# Add deno completions to search path
-if [[ ":$FPATH:" != *":/home/ike/.zsh/completions:"* ]]; then export FPATH="/home/ike/.zsh/completions:$FPATH"; fi
+# macOS では /home/ike/... のような Linux 固定パスが存在せず、
+# compinit が遅くなる原因になるので、実在するローカル completion だけを追加する。
+if [[ -d "$HOME/.zsh/completions" && ${fpath[(Ie)$HOME/.zsh/completions]} -eq 0 ]]; then
+  fpath=("$HOME/.zsh/completions" $fpath)
+fi
 if [[ -f ~/.deno/env ]]; then
   source ~/.deno/env
 fi
@@ -11,7 +14,14 @@ fpath=(~/.zsh $fpath)
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 
 # zshの補完機能を有効にする
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+# 初回だけフルで dump を作り、2 回目以降は -C で再検査を省いて
+# ターミナル起動時の completion 初期化コストを下げる。
+if [[ -f "$HOME/.zcompdump" ]]; then
+  compinit -C
+else
+  compinit
+fi
 
 # プロンプトのオプション表示設定
 GIT_PS1_SHOWDIRTYSTATE=true

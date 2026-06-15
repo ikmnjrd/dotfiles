@@ -24,6 +24,7 @@ dotfiles+=("$(pwd)/.zshrc")
 dotfiles+=("$(pwd)/.zshenv")
 dotfiles+=("$(pwd)/.tmux.conf")
 dotfiles+=("$(pwd)/.gitconfig")
+dotfiles+=("$(pwd)/.wezterm.lua")
 dotfiles+=("$(pwd)/.config/nvim/init.vim")
 dotfiles+=("$(pwd)/.config/espanso/config/default.yml")
 dotfiles+=("$(pwd)/.config/espanso/match/base.yml")
@@ -60,6 +61,7 @@ home_dotsfile+=("$HOME/.zshrc")
 home_dotsfile+=("$HOME/.zshenv")
 home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
+home_dotsfile+=("$HOME/.wezterm.lua")
 home_dotsfile+=("$HOME/.alacritty.toml")
 home_dotsfile+=("$HOME/.ssh/config")
 home_dotsfile+=("$HOME/.ssh/config.d/nixos-remote-dev")
@@ -108,6 +110,9 @@ set_links() {
     ### .config/git
     elif [[ "$file_name" =~ \/.config\/git\/.+$ ]]; then
         ln -svf "$file_name" "$HOME/.config/git/"
+    ### wezterm ###
+    elif [[ "$file_name" =~ \/.wezterm\.lua$ ]]; then
+        ln -svf "$file_name" "$HOME/.wezterm.lua"
     ### espanso ###
     elif [[ "$file_name" =~ \/\.config\/espanso/config.+$ ]]; then
         if [ "$is_mac" == "true" ]; then
