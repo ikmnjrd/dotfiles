@@ -6,8 +6,8 @@
   "terminal.integrated.profiles.osx": {
     "/bin/bash (migrated)": {
       "path": "/bin/bash",
-      "args": ["-l"]
-    }
+      "args": ["-l"],
+    },
   },
   "terminal.integrated.defaultProfile.windows": "",
   "terminal.integrated.fontFamily": "Consolas, Source Code Pro",
@@ -20,11 +20,11 @@
   "workbench.editor.wrapTabs": true,
   "terminal.external.osxExec": "alacritty.app",
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "window.zoomLevel": 1,
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   // "[typescript]": {
   //   "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -34,15 +34,12 @@
   // }
   // Neovim拡張
   "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
+    "asvetliakov.vscode-neovim": 1,
   },
   "javascript.updateImportsOnFileMove.enabled": "never",
   "editor.inlineSuggest.enabled": true,
   "workbench.editor.empty.hint": "hidden",
-  "cSpell.userWords": [
-    "deepseek",
-    "Nuxt"
-  ],
+  "cSpell.userWords": ["deepseek", "Nuxt"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
     "b",
@@ -74,4 +71,18 @@
     "backspace",
     "delete",
   ],
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.svg": "default",
+  },
+  "terminal.integrated.suggest.enabled": false,
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://biomejs.dev": true,
+  },
+  "docker.extension.enableComposeLanguageServer": false,
 }

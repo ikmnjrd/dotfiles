@@ -63,6 +63,13 @@ function fbr() {
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
+# gcd - interactively select and navigate to a ghq repository
+function gcd() {
+  local repo
+  repo=$(ghq list | peco) || return
+  [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
+}
+
 # select_worktree - interactively select and navigate to a git worktree
 function select_worktree() {
   local worktrees
@@ -169,3 +176,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export CAPACITOR_ANDROID_STUDIO_PATH="/usr/bin/android-studio"
 
 export PATH="/opt/homebrew/opt/mysql-client@8.0/bin:$PATH"
+
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
