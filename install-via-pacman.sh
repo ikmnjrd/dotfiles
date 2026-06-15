@@ -9,6 +9,8 @@ pacman -S \
   ttf-sourcecodepro-nerd \
   noto-fonts-cjk \
   flatpak \
+  avahi \
+  nss-mdns \
   maim \
   fcitx5-im \
   fcitx5-mozc \
@@ -16,6 +18,16 @@ pacman -S \
   xclip \
   rustup \
   p7zip \
-  tree
+  tree \
+  docker \
+  docker-compose \
+  xorg-xhost \
+  git-lfs \
+  ollama \
+  tailscale \
+  github-cli \
+  peco \
+  ghq \
 
 # rustupインストール後、`rustup dafault stable`を実行
+# xorg-xhost: dockerで起動したアプリケーションをGUIで表示するため

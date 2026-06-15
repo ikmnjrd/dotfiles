@@ -1,0 +1,14 @@
+{
+  "projects": [],
+  "defaultSettings": {
+    "autoDetectLanguage": true,
+    "includeHiddenFiles": false,
+    "excludePatterns": [
+      "node_modules",
+      ".git",
+      "dist",
+      "build",
+      "target"
+    ]
+  }
+}

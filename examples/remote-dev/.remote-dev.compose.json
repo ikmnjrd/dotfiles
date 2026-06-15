@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "project": "example-app",
+  "runner": {
+    "type": "compose",
+    "files": [
+      "compose.yaml"
+    ],
+    "build": true
+  },
+  "ports": {
+    "web": {
+      "env": "REMOTE_DEV_WEB_PORT",
+      "scheme": "http",
+      "health": {
+        "path": "/",
+        "timeoutSeconds": 120
+      }
+    }
+  },
+  "sync": {
+    "ignore": []
+  },
+  "secrets": [
+    ".env.local"
+  ]
+}

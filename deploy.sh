@@ -39,6 +39,9 @@ dotfiles+=("$(pwd)/.config/git/ignore")
 dotfiles+=("$(pwd)/vscode/keybindings.json")
 dotfiles+=("$(pwd)/vscode/settings.json")
 dotfiles+=("$(pwd)/.alacritty.base.toml")
+dotfiles+=("$(pwd)/ssh/config")
+dotfiles+=("$(pwd)/ssh/config.d/nixos-remote-dev")
+dotfiles+=("$(pwd)/bin/remote-dev")
 if [ "$is_mac" == "true" ]; then
     dotfiles+=("$(pwd)/.yabairc")
     dotfiles+=("$(pwd)/.skhdrc")
@@ -60,6 +63,9 @@ home_dotsfile+=("$HOME/.tmux.conf")
 home_dotsfile+=("$HOME/.gitconfig")
 home_dotsfile+=("$HOME/.wezterm.lua")
 home_dotsfile+=("$HOME/.alacritty.toml")
+home_dotsfile+=("$HOME/.ssh/config")
+home_dotsfile+=("$HOME/.ssh/config.d/nixos-remote-dev")
+home_dotsfile+=("$HOME/.local/bin/remote-dev")
 home_dotsfile+=("$HOME/.config/nvim/init.vim")
 ## OS X
 if [ "$is_mac" == "true" ]; then
@@ -125,6 +131,17 @@ set_links() {
         ln -svf "$file_name" "$HOME/.alacritty.base.toml"
     elif [[ "$file_name" =~ \/.alacritty.+$ ]]; then
         ln -svf "$file_name" "$HOME/.alacritty.toml"
+    elif [[ "$file_name" =~ \/ssh\/config$ ]]; then
+        mkdir -p "$HOME/.ssh"
+        chmod 700 "$HOME/.ssh"
+        ln -svf "$file_name" "$HOME/.ssh/config"
+    elif [[ "$file_name" =~ \/ssh\/config\.d\/.+$ ]]; then
+        mkdir -p "$HOME/.ssh/config.d"
+        chmod 700 "$HOME/.ssh"
+        ln -svf "$file_name" "$HOME/.ssh/config.d/"
+    elif [[ "$file_name" =~ \/bin\/remote-dev$ ]]; then
+        mkdir -p "$HOME/.local/bin"
+        ln -svf "$file_name" "$HOME/.local/bin/remote-dev"
     ### ./ ###
     else
       ln -svf "$file_name" "$HOME"

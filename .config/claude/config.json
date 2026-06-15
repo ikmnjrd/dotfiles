@@ -1,0 +1,19 @@
+{
+  "theme": "dark",
+  "editor": {
+    "fontSize": 14,
+    "fontFamily": "monospace",
+    "tabSize": 2,
+    "wordWrap": true
+  },
+  "behavior": {
+    "autoSave": true,
+    "confirmBeforeClose": true,
+    "showLineNumbers": true
+  },
+  "shortcuts": {
+    "newChat": "Ctrl+N",
+    "search": "Ctrl+F",
+    "toggleSidebar": "Ctrl+B"
+  }
+}

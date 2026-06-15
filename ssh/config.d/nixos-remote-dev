@@ -1,0 +1,10 @@
+Host nixos-remote-dev
+  HostName nixos.local
+  User ikd
+  IdentityFile ~/.ssh/id_ed25519_nixos_remote_dev
+  IdentitiesOnly yes
+  ServerAliveInterval 30
+  ServerAliveCountMax 3
+  ControlMaster auto
+  ControlPersist 10m
+  ControlPath ~/.ssh/control-%C

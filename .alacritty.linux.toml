@@ -28,3 +28,6 @@ decorations = "full"
 dynamic_padding = true
 opacity = 0.9
 startup_mode = "Windowed"
+
+[bell]
+command  = { program = "/usr/local/bin/alacritty-linux-bell", args = [] }

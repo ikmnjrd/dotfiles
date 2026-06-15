@@ -1,0 +1,367 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+state_root="${XDG_STATE_HOME:-${HOME}/.local/state}/remote-dev"
+ssh_target="${REMOTE_DEV_SSH_TARGET:-nixos-remote-dev}"
+remote_helper="${REMOTE_DEV_REMOTE_HELPER:-remote-dev-helper}"
+config_name=".remote-dev.json"
+
+die() {
+  printf 'remote-dev: %s\n' "$*" >&2
+  exit 1
+}
+
+require_command() {
+  command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+sanitize_id() {
+  local value
+  value="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+  value="${value//[^a-z0-9_.-]/-}"
+  value="${value#-}"
+  value="${value%-}"
+  [[ -n "${value}" ]] || die "identifier is empty after normalization"
+  [[ "${#value}" -le 48 ]] || die "identifier is longer than 48 characters: ${value}"
+  printf '%s\n' "${value}"
+}
+
+repo_root() {
+  git rev-parse --show-toplevel 2>/dev/null ||
+    die "run this command inside a Git worktree"
+}
+
+config_path() {
+  printf '%s/%s\n' "$(repo_root)" "${config_name}"
+}
+
+validate_config() {
+  local config="$1"
+  [[ -f "${config}" ]] || die "missing ${config_name}: ${config}"
+
+  jq -e '
+    .version == 1
+    and (.project | type == "string" and length > 0)
+    and (.runner | type == "object")
+    and (.runner.type == "compose" or .runner.type == "command")
+    and (
+      if .runner.type == "compose" then
+        ((.runner.files // ["compose.yaml"]) | type == "array" and length > 0 and all(.[]; type == "string" and length > 0))
+      else
+        (.runner.command | type == "array" and length > 0 and all(.[]; type == "string"))
+      end
+    )
+    and ((.ports // {}) | type == "object")
+    and all((.ports // {}) | to_entries[];
+      (.key | test("^[A-Za-z0-9_.-]+$"))
+      and (.value.env | type == "string" and test("^[A-Z_][A-Z0-9_]*$"))
+      and ((.value.scheme // "http") | type == "string")
+      and ((.value.health // {}) | type == "object")
+    )
+    and ((.sync.ignore // []) | type == "array" and all(.[]; type == "string"))
+    and ((.secrets // []) | type == "array" and all(.[];
+      type == "string"
+      and (startswith("/") | not)
+      and (split("/") | all(. != ".." and . != ""))
+    ))
+  ' "${config}" >/dev/null || die "invalid ${config_name}"
+}
+
+host_id() {
+  sanitize_id "${REMOTE_DEV_HOST_ID:-$(hostname -s)}"
+}
+
+project_id() {
+  sanitize_id "$(jq -r '.project' "$(config_path)")"
+}
+
+slot_id() {
+  sanitize_id "$1"
+}
+
+state_file() {
+  local host="$1" project="$2" slot="$3"
+  printf '%s/slots/%s/%s/%s.json\n' "${state_root}" "${host}" "${project}" "${slot}"
+}
+
+session_name() {
+  local host="$1" project="$2" slot="$3"
+  local checksum
+  checksum="$(printf '%s' "${host}/${project}/${slot}" | cksum | awk '{print $1}')"
+  printf 'remote-dev-%s-%s-%s-%s\n' "${host}" "${project}" "${slot}" "${checksum}"
+}
+
+remote_path() {
+  local host="$1" project="$2" slot="$3"
+  printf '/home/ikd/workspace/remote-dev/%s/%s/%s/src\n' "${host}" "${project}" "${slot}"
+}
+
+write_state() {
+  local file="$1" root="$2" host="$3" project="$4" slot="$5" session="$6" remote="$7"
+  local tmp
+  mkdir -p -- "$(dirname -- "${file}")"
+  tmp="$(mktemp "${file}.tmp.XXXXXX")"
+  jq -n \
+    --arg root "${root}" \
+    --arg host "${host}" \
+    --arg project "${project}" \
+    --arg slot "${slot}" \
+    --arg session "${session}" \
+    --arg remote "${remote}" \
+    '{root: $root, host: $host, project: $project, slot: $slot, session: $session, remote: $remote}' \
+    >"${tmp}"
+  mv -f -- "${tmp}" "${file}"
+}
+
+resolve_slot() {
+  local requested="${1:-}"
+  local root config host project file slot
+  root="$(repo_root)"
+  config="${root}/${config_name}"
+  validate_config "${config}"
+  host="$(host_id)"
+  project="$(project_id)"
+
+  if [[ -z "${requested}" ]]; then
+    local -a matches=()
+    local match
+    while IFS= read -r match; do
+      matches+=("${match}")
+    done < <(find "${state_root}/slots/${host}/${project}" -maxdepth 1 -type f \
+      -name '*.json' -print 2>/dev/null || true)
+    [[ "${#matches[@]}" -eq 1 ]] ||
+      die "specify a slot; found ${#matches[@]} registrations for ${host}/${project}"
+    file="${matches[0]}"
+    requested="$(jq -r '.slot' "${file}")"
+  fi
+
+  slot="$(slot_id "${requested}")"
+  file="$(state_file "${host}" "${project}" "${slot}")"
+  [[ -f "${file}" ]] || die "slot is not initialized: ${host}/${project}/${slot}"
+  [[ "$(jq -r '.root' "${file}")" == "${root}" ]] ||
+    die "slot belongs to a different worktree: $(jq -r '.root' "${file}")"
+
+  SLOT_ROOT="${root}"
+  SLOT_HOST="${host}"
+  SLOT_PROJECT="${project}"
+  SLOT_ID="${slot}"
+  SLOT_STATE="${file}"
+  SLOT_SESSION="$(jq -r '.session' "${file}")"
+}
+
+ssh_helper() {
+  local command
+  printf -v command '%q ' "${remote_helper}" "$@"
+  # shellcheck disable=SC2029
+  ssh "${ssh_target}" "${command% }"
+}
+
+ssh_helper_tty() {
+  local command
+  printf -v command '%q ' "${remote_helper}" "$@"
+  # shellcheck disable=SC2029
+  ssh -t "${ssh_target}" "${command% }"
+}
+
+mutagen_ignores() {
+  cat <<'EOF'
+.git
+.env
+node_modules
+.direnv
+result
+result-*
+.next
+.nuxt
+.output
+dist
+build
+coverage
+.cache
+.turbo
+.vite
+EOF
+  jq -r '.sync.ignore[]?' "$(config_path)"
+  jq -r '.secrets[]?' "$(config_path)"
+}
+
+create_sync() {
+  local root="$1" remote="$2" session="$3"
+  local -a args=(
+    sync create
+    --name "${session}"
+    --mode one-way-replica
+  )
+  local ignore
+  while IFS= read -r ignore; do
+    [[ -n "${ignore}" ]] && args+=(--ignore "${ignore}")
+  done < <(mutagen_ignores | awk '!seen[$0]++')
+  args+=("${root}" "${ssh_target}:${remote}")
+  mutagen "${args[@]}"
+}
+
+cmd_init() {
+  local requested="${1:-}"
+  [[ -n "${requested}" ]] || die "usage: remote-dev init <slot>"
+  require_command git
+  require_command jq
+  require_command mutagen
+  require_command ssh
+
+  local root config host project slot file session remote
+  root="$(repo_root)"
+  config="${root}/${config_name}"
+  validate_config "${config}"
+  host="$(host_id)"
+  project="$(project_id)"
+  slot="$(slot_id "${requested}")"
+  file="$(state_file "${host}" "${project}" "${slot}")"
+  session="$(session_name "${host}" "${project}" "${slot}")"
+  remote="$(remote_path "${host}" "${project}" "${slot}")"
+
+  [[ ! -e "${file}" ]] || die "slot already initialized: ${host}/${project}/${slot}"
+  ssh_helper register "${host}" "${project}" "${slot}"
+  if ! create_sync "${root}" "${remote}" "${session}"; then
+    ssh_helper destroy "${host}" "${project}" "${slot}" >/dev/null 2>&1 || true
+    die "failed to create Mutagen session"
+  fi
+  if ! mutagen sync flush "${session}" ||
+    ! ssh_helper configure "${host}" "${project}" "${slot}"; then
+    mutagen sync terminate "${session}" >/dev/null 2>&1 || true
+    ssh_helper destroy "${host}" "${project}" "${slot}" >/dev/null 2>&1 || true
+    die "failed to initialize remote slot"
+  fi
+  write_state "${file}" "${root}" "${host}" "${project}" "${slot}" "${session}" "${remote}"
+  printf 'Initialized %s/%s/%s\n' "${host}" "${project}" "${slot}"
+}
+
+cmd_sync() {
+  resolve_slot "${1:-}"
+  mutagen sync flush "${SLOT_SESSION}"
+  ssh_helper configure "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+}
+
+cmd_secrets_sync() {
+  resolve_slot "${1:-}"
+  local secret source
+  while IFS= read -r secret; do
+    [[ -n "${secret}" ]] || continue
+    source="${SLOT_ROOT}/${secret}"
+    [[ -f "${source}" ]] || die "secret file not found: ${source}"
+    ssh_helper secret-write \
+      "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}" "${secret}" <"${source}"
+    printf 'Synced secret %s\n' "${secret}"
+  done < <(jq -r '.secrets[]?' "${SLOT_ROOT}/${config_name}")
+}
+
+cmd_up() {
+  resolve_slot "${1:-}"
+  mutagen sync flush "${SLOT_SESSION}"
+  ssh_helper configure "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+  ssh_helper up "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+}
+
+cmd_simple_remote() {
+  local command="$1" slot="${2:-}"
+  resolve_slot "${slot}"
+  ssh_helper "${command}" "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+}
+
+cmd_logs() {
+  local follow="false" slot=""
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --follow|-f) follow="true" ;;
+      *) [[ -z "${slot}" ]] || die "usage: remote-dev logs [--follow] [slot]"; slot="$1" ;;
+    esac
+    shift
+  done
+  resolve_slot "${slot}"
+  if [[ "${follow}" == "true" ]]; then
+    ssh_helper_tty logs \
+      "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}" --follow
+  else
+    ssh_helper logs "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+  fi
+}
+
+cmd_destroy() {
+  local purge="false" slot=""
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --purge-volumes) purge="true" ;;
+      *) [[ -z "${slot}" ]] || die "usage: remote-dev destroy [--purge-volumes] [slot]"; slot="$1" ;;
+    esac
+    shift
+  done
+  resolve_slot "${slot}"
+  mutagen sync terminate "${SLOT_SESSION}" || true
+  if [[ "${purge}" == "true" ]]; then
+    ssh_helper destroy "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}" --purge-volumes
+  else
+    ssh_helper destroy "${SLOT_HOST}" "${SLOT_PROJECT}" "${SLOT_ID}"
+  fi
+  rm -f -- "${SLOT_STATE}"
+}
+
+cmd_doctor() {
+  local failed=0 command
+  for command in git jq mutagen ssh; do
+    if command -v "${command}" >/dev/null 2>&1; then
+      printf 'ok: %s\n' "${command}"
+    else
+      printf 'missing: %s\n' "${command}" >&2
+      failed=1
+    fi
+  done
+  local doctor_command
+  printf -v doctor_command '%q ' "${remote_helper}" doctor
+  # shellcheck disable=SC2029
+  if ssh -o BatchMode=yes "${ssh_target}" "${doctor_command% }"; then
+    printf 'ok: ssh %s\n' "${ssh_target}"
+  else
+    printf 'failed: ssh %s\n' "${ssh_target}" >&2
+    failed=1
+  fi
+  return "${failed}"
+}
+
+usage() {
+  cat <<'EOF'
+Usage: remote-dev <command> [options] [slot]
+
+Commands:
+  init <slot>                 Register this worktree and create its sync
+  sync [slot]                 Flush source changes and refresh remote config
+  secrets sync [slot]         Copy configured secret files with mode 0600
+  up [slot]                   Sync, start, and wait for health checks
+  down [slot]                 Stop the runner and Compose resources
+  restart [slot]              Restart the runner and wait for health checks
+  status [slot]               Show runner state and NixOS-local URLs
+  logs [--follow] [slot]      Show the systemd user unit log
+  destroy [--purge-volumes] [slot]
+                              Remove the registration; keep volumes by default
+  doctor                      Check local dependencies and SSH connectivity
+EOF
+}
+
+case "${1:-}" in
+  init) shift; cmd_init "$@" ;;
+  sync) shift; cmd_sync "$@" ;;
+  secrets)
+    shift
+    [[ "${1:-}" == "sync" ]] || die "usage: remote-dev secrets sync [slot]"
+    shift
+    cmd_secrets_sync "$@"
+    ;;
+  up) shift; cmd_up "$@" ;;
+  down) shift; cmd_simple_remote down "${1:-}" ;;
+  restart) shift; cmd_simple_remote restart "${1:-}" ;;
+  status) shift; cmd_simple_remote status "${1:-}" ;;
+  logs) shift; cmd_logs "$@" ;;
+  destroy) shift; cmd_destroy "$@" ;;
+  doctor) shift; cmd_doctor "$@" ;;
+  help|-h|--help|"") usage ;;
+  *) usage >&2; exit 1 ;;
+esac
