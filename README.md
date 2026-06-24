@@ -21,9 +21,9 @@
 
 ## NixOS remote development
 
-`bin/remote-dev` は、このPCまたはMacのGit worktreeを
-`nixos.local`へ一方向同期し、NixOS側でDocker Composeまたは
-`nix develop`の開発サーバーを起動します。
+`bin/remote-dev` は、このPCまたはMacのカレントGit worktreeを
+`nixos.local`へrsyncします。
+NixOS側では同期先へ移動して、Docker Composeや`nix develop`を直接実行します。
 
 初回だけホスト別の鍵を作成し、公開鍵をnixos-configへ追加します。
 
@@ -43,24 +43,26 @@ getent hosts nixos.local
 解決できない場合は `/etc/nsswitch.conf` の `hosts:` に
 `mdns_minimal [NOTFOUND=return]` が含まれていることを確認します。
 
-Webリポジトリでは `examples/remote-dev` を参考に
-`.remote-dev.json` を作成します。Composeの公開ポートは、たとえば
-`127.0.0.1:${REMOTE_DEV_WEB_PORT:-3000}:3000` のように設定ファイルで
-指定した環境変数を受け取る必要があります。
+使うときは対象リポジトリまたはworktreeで実行します。
 
 ```sh
 git worktree add ../example-feature -b feature/example
 cd ../example-feature
-remote-dev init feature
-remote-dev secrets sync
-remote-dev up
-remote-dev status
-remote-dev logs --follow
-remote-dev down
-remote-dev destroy
+remote-dev
+ssh nixos-remote-dev
+cd ~/workspace/remote-dev/<host>/<repo>/feature-example
+docker compose up
 ```
 
-ソースはホスト側が正本です。NixOS側の実行コピーを直接編集しないでください。
+同期先は`~/workspace/remote-dev/<host>/<repo>/<branch>/`です。
+`<repo>`は`remote.origin.url`のリポジトリ名から決め、remoteが無い場合はworktreeのディレクトリ名を使います。
+`<host>`、`<repo>`、`<branch>`は小文字化し、ディレクトリ名として扱いやすい形に正規化します。
+detached HEADはサポートしません。
+
+ソースはホスト側が正本です。
+同期には`rsync --delete`を使うため、NixOS側の実行コピーを直接編集しないでください。
+`.env`や`.env.local`などのGit管理外ファイルも同期されます。
+リモート側だけに置きたい一時ファイルは`.remote-dev-local/`に置きます。
 
 # お気持ち
 ## Color Scheme

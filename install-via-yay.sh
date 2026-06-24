@@ -8,7 +8,6 @@ yay -S \
   notion-app \
   aws-cli-v2 \
   ngrok \
-  blender-bin \
-  mutagen.io-bin
+  blender-bin
   # for auto-commit [ export OPENAI_API_KEY='sk-XXXXXXXX' ] https://github.com/m1guelpf/auto-commit/
   # cursor-appimage
