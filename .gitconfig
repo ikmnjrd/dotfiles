@@ -53,6 +53,28 @@
 
   rename-js-to-ts = "!f() { git ls-files \"$1\"*.js | while read file; do git mv \"$file\" \"${file%.js}.ts\"; done; }; f"
 
+  amend-copy = !git add . && git commit --amend --no-edit && git rev-parse HEAD | pbcopy
+
+  undo-amend-copy = "!f() { \
+    picked_commit=\"$(pbpaste)\"; \
+    echo 'reset対象のコミット:'; \
+    git log -1 --oneline HEAD; \
+    echo; \
+    echo 'cherry-pick対象のコミット:'; \
+    git log -1 --oneline \"$picked_commit\" 2>/dev/null || echo \"$picked_commit\"; \
+    echo; \
+    printf 'git reset --hard HEAD^ を実行して、上記のコミットを cherry-pick しますか? [y/N] '; \
+    read ans; \
+    case \"$ans\" in \
+      y|Y|yes|YES) \
+        git reset --hard HEAD^ && git cherry-pick \"$picked_commit\" ;; \
+      *) \
+        echo '中止しました' ;; \
+    esac; \
+  }; f"
+
+  stashfile = stash push --
+
   # worktree
   w    = worktree
   wa   = worktree add
