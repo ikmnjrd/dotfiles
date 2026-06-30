@@ -73,6 +73,46 @@ coverage
 EOF
 }
 
+run_with_spinner() {
+  local label="$1"
+  shift
+
+  if [[ ! -t 2 ]]; then
+    "$@"
+    return
+  fi
+
+  "$@" &
+  local pid="$!"
+  local -a frames=("-" "\\" "|" "/")
+  local index=0
+  local running job_pid status
+
+  while :; do
+    running=false
+    while IFS= read -r job_pid; do
+      if [[ "${job_pid}" == "${pid}" ]]; then
+        running=true
+        break
+      fi
+    done < <(jobs -pr)
+
+    [[ "${running}" == "true" ]] || break
+    printf '\r%s %s' "${label}" "${frames[index]}" >&2
+    index=$(((index + 1) % ${#frames[@]}))
+    sleep 0.12
+  done
+
+  if wait "${pid}"; then
+    printf '\r%s done.   \n' "${label}" >&2
+    return 0
+  fi
+
+  status="$?"
+  printf '\r%s failed. \n' "${label}" >&2
+  return "${status}"
+}
+
 cmd_sync() {
   require_command git
   require_command rsync
@@ -96,7 +136,8 @@ cmd_sync() {
     [[ -n "${exclude}" ]] && args+=(--exclude "${exclude}")
   done < <(rsync_excludes)
 
-  rsync "${args[@]}" "${root}/" "${ssh_target}:${remote_rel}/"
+  run_with_spinner "Syncing to ${ssh_target}:~/${remote_rel}" \
+    rsync "${args[@]}" "${root}/" "${ssh_target}:${remote_rel}/"
 
   printf 'Synced to %s:~/%s\n' "${ssh_target}" "${remote_rel}"
   printf 'ssh %s\n' "${ssh_target}"
