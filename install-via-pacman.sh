@@ -4,6 +4,7 @@ pacman -S \
   fzf \
   zsh \
   ripgrep \
+  rsync \
   wezterm \
   tmux \
   ttf-sourcecodepro-nerd \
